@@ -25,7 +25,7 @@ Route::group(['namespace' => 'Home'], function () {
 
     //第二层（设置登录中间件）
     Route::group(['middleware' => 'auth'], function () {
-        Route::get('/home', function (){
+        Route::get('/', function (){
             echo '前台用户id：'.Auth::id();
         })->name('home');
     });
