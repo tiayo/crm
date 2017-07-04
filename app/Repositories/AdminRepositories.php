@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Admin;
+
+class AdminRepositories
+{
+    protected $admin;
+
+    public function __construct(Admin $admin)
+    {
+        $this->admin = $admin;
+    }
+
+    public function create($data)
+    {
+        return $this->admin->create($data);
+    }
+}
