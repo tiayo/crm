@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Admin;
-use App\Task;
+use App\Model\Admin;
+use App\Model\Task;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ViewPolicy
@@ -13,8 +13,8 @@ class ViewPolicy
     /**
      * Determine whether the user can view the post.
      *
-     * @param  \App\Admin  $admin
-     * @param  \App\Task  $task
+     * @param  \App\Model\Admin  $admin
+     * @param  \App\Model\Task  $task
      * @return mixed
      */
     public function view(Admin $admin, Task $task)

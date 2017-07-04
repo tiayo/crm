@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Admin;
+use App\Model\Admin;
 
 class AdminRepositories
 {

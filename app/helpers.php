@@ -12,7 +12,7 @@ if (!function_exists('can')) {
      */
     function can($name, $option, $class)
     {
-        $$name = app("App\\".ucwords(strtolower($name)));
+        $$name = app("App\Model\\".ucwords(strtolower($name)));
 
         return $$name->find(Auth::guard($name)->id())->can($option, $class);
     }
