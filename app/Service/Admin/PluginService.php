@@ -30,7 +30,7 @@ class PluginService
         $home = config('plugin.home_path');
 
         //拼接目标字符串
-        $array = '<?php'."\r\n".'return ['."\r\n";
+        $array = '<?php'."\r\n\r\n".'return ['."\r\n\r\n";
 
         //循环拼接目标字符串
         foreach ($activePlugins as $plugin) {
@@ -44,7 +44,7 @@ class PluginService
                 continue;
             }
 
-            $array .= 'Plugins\\'.$type_name.'\\'.$plugin['alias'].'\\Providers\\'.$plugin['alias'].'Provider::class,';
+            $array .= '     '.'Plugins\\'.$type_name.'\\'.$plugin['alias'].'\\Providers\\'.$plugin['alias'].'Provider::class,'."\r\n";
         }
 
         //写入文件
@@ -54,11 +54,23 @@ class PluginService
         return true;
     }
 
+    /**
+     * 通过插件类型获取插件
+     *
+     * @param $type
+     * @return mixed
+     */
     public function lists($type)
     {
         return $this->plugin->getType($type);
     }
 
+    /**
+     * 更改插件状态
+     *
+     * @param $plugin_id
+     * @return bool
+     */
     public function pluginStatus($plugin_id)
     {
         //获取插件状态

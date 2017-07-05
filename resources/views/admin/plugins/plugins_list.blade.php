@@ -77,9 +77,9 @@
                             <th>{{$list['edition']}}</th>
                             <th>
                                 @if ($list['status'] == 1)
-                                    启用中
+                                    <button class="btn btn-success btn-xs" type="button">启用中</button>
                                     @else
-                                    禁用
+                                    <button class="btn btn-warning btn-xs" type="button">禁用</button>
                                 @endif
                             </th>
                             <th>{{$list['description']}}</th>
