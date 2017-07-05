@@ -177,6 +177,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        //plugins
+        App\Plugins\Example\Providers\ExampleProvider::class,
+
     ],
 
     /*
@@ -225,7 +228,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Example' => App\Plugins\Example\Facades\Example::class,
     ],
 
 ];

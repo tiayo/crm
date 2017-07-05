@@ -17,3 +17,16 @@ if (!function_exists('can')) {
         return $$name->find(Auth::guard($name)->id())->can($option, $class);
     }
 }
+
+if (!function_exists('plugins_path')) {
+    /**
+     * 获取插件根目录
+     *
+     * @param $name
+     * @return string
+     */
+    function plugins_path($name)
+    {
+        return app_path().'/Plugins/'.$name;
+    }
+}
