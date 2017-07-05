@@ -8,7 +8,7 @@ use Plugins\Example\Service\IndexService;
 class ExampleProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
+     * 引导应用程序服务
      *
      * @return void
      */
@@ -25,13 +25,13 @@ class ExampleProvider extends ServiceProvider
     }
 
     /**
-     * Register any application services.
+     * 注册应用程序服务
      *
      * @return void
      */
     public function register()
     {
-        //注册容器注入
+        //绑定容器注入
         $this->app->singleton('index_service', function ($app) {
             return new IndexService();
         });

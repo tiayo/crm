@@ -23,32 +23,37 @@
     }
 </style>
 
-<h1>plugins插件开发流程</h1>
+<h1>laravel插件开发流程</h1>
 
 <h3>目录</h3>
 <ul>
-    <li>config <span>//配置文件</span></li>
-    <li>Controllers <span>//控制器</span></li>
-    <li>Facades <span>//门面方法定义（可以省略）</span></li>
-    <li>Model <span>//模型文件</span></li>
-    <li>Providers <span>//注册文件目录</span></li>
-    <li>Service <span>//业务逻辑代码</span></li>
-    <li>views <span>//视图文件</span></li>
+    <li>config <span>//配置文件目录</span></li>
+    <li>Controllers <span>//控制器目录</span></li>
+    <li>Facades <span>//facade方法目录（可以省略）</span></li>
+    <li>Model <span>//模型文件目录</span></li>
+    <li>Providers <span>//注册服务目录</span></li>
+    <li>Service <span>//业务逻辑目录</span></li>
+    <li>views <span>//视图文件目录</span></li>
     <li>...自由扩展目录（除资源类目录<span>[例如：config、views文件夹]</span>外，文件夹名称采用大驼峰命令）</li>
 </ul>
 
-<h3>Larevel模型文件夹</h3>
+<h3>Larevel模型文件</h3>
 <ul>
     <li>命令空间正确即可用</li>
-    <li>使用参考laravel官方文档</li>
+    <li>使用模型参考laravel官方文档<a href="http://d.laravel-china.org/docs/5.4/eloquent">Eloquent</a>部分</li>
 </ul>
 
 <h3>启用关闭插件</h3>
 <ul>
-    <li>将插件Providers目录下服务提供类文件注册到/config/app.php的providers数组下（例如本示例插件示例需添加： <span>App\Plugins\Example\Providers\ExampleProvider::class</span>）</li>
+    <li>将插件下Providers目录中服务注册类注册到/config/app.php的providers数组下（例如本示例插件示例需添加： <span>App\Plugins\Example\Providers\ExampleProvider::class</span>）</li>
     <li>
         关闭插件时，将服务从/config/app.php的providers数组下删除即可
     </li>
+</ul>
+
+<h3>插件配置</h3>
+<ul>
+    <li>参考本插件下Providers\ExampleProvider.php的boot方法</li>
 </ul>
 
 <h3>命令空间</h3>
@@ -78,9 +83,9 @@ function test(IndexService $index) {
                     <li class="big-bottom">代码执行结果：<i>{{ $dependency }}</i></li>
                 </ul>
             </li>
-            <li>2、使用容器注入（app）：<span>（根据情况选择使用）</span></li>
+            <li>2、使用容器注入：<span>（根据情况选择使用）</span></li>
                 <ul>
-                    <li>在插件Providers下服务提供类的register添加绑定（例子详见ExampleProvider.php）</li>
+                    <li>在插件下Providers中服务注册类的register方法添加绑定（例子详见ExampleProvider.php）</li>
                     <li>在全局使用laravel容器注入访问：app('index_service')->app()</li>
                     <li class="big-bottom">执行结果:<i>{{ $app }}</i></li>
                 </ul>
