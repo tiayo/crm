@@ -1,6 +1,6 @@
 <?php
 
-return [
+$default =  [
 
     /*
     |--------------------------------------------------------------------------
@@ -176,10 +176,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
-        //plugins
-        App\Plugins\Example\Providers\ExampleProvider::class,
-
     ],
 
     /*
@@ -228,7 +224,18 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Example' => App\Plugins\Example\Facades\Example::class,
+        'Example' => Plugins\Admin\Example\Facades\Example::class,
     ],
-
 ];
+
+//获取插件列表
+$plugins = include('plugin_list.php');
+
+//添加
+foreach ($plugins as $plugin) {
+    $default['providers'][] = $plugin;
+}
+
+//返回最后数组
+return $default;
+

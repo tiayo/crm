@@ -6,7 +6,7 @@
  * 这里设置后台页面的主要路由
  */
 
-//第一层（设置命令空间）
+//第一层（设置命令空间和前缀）
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     $this->get('logout', 'Auth\LoginController@logout')->name('admin.logout');
@@ -23,7 +23,12 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::group(['middleware' => 'adminauth'], function () {
 
         Route::get('/', 'AdminController@index')->name('admin');
-        Route::get('/test/{id}', 'AdminController@test');
 
+        //第三层（设置前缀）
+        Route::group(['prefix' => 'plugin'], function () {
+            Route::get('/admin_plugins', 'PluginController@adminPlugins')->name('admin_plugins');
+            Route::get('/home_plugins', 'PluginController@homePlugins')->name('home_plugins');
+            Route::get('/plugin_status/{plugin_id}', 'PluginController@pluginStatus')->name('plugin_status');
+        });
     });
 });

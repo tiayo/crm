@@ -1,0 +1,192 @@
+<extend name="Public/base" />
+
+<block name="breadcrumb">
+    <div class="row">
+        <div class="col-md-12">
+            <!--breadcrumbs start -->
+            <ul class="breadcrumb panel">
+                <li><a href="/"><i class="fa fa-home"></i>主页</a></li>
+                <li class="active">上报异常</li>
+            </ul>
+            <!--breadcrumbs end -->
+        </div>
+    </div>
+</block>
+
+<block name="body">
+    <div class="row">
+
+        <!--提示信息输出-->
+        <div class="col-md-12 ">
+            <div class="alert <if condition="isset($creat_report['error'])">alert-danger<elseif condition="isset($creat_report['success'])"/>alert-success<else />hidden</if> fade in" id="alert_error">
+                <a href="#" class="close" data-dismiss="alert">×</a>
+                <span>
+                    <if condition="isset($creat_report['error'])">
+                        {$creat_report['error']}
+                        <elseif condition="isset($creat_report['success'])"/>
+                        {$creat_report['success']}
+                    </if>
+                </span>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    上报异常
+                </header>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <form method="post" action="/manage/logs/createPost">
+                            <div class="form-group">
+                                <label class="col-lg-3 col-sm-3 control-label">姓名</label>
+                                <div class="col-lg-4">
+                                    <input name="name" type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 col-sm-3 control-label">电话</label>
+                                <div class="col-lg-4">
+                                    <input name="phone" type="number" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 col-sm-3 control-label">邮箱</label>
+                                <div class="col-lg-4">
+                                    <input name="email" type="email" class="form-control">
+                                </div>
+                            </div>
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-lg-3 col-sm-3 control-label">类型</label>-->
+                                <!--<div class="col-lg-4">-->
+                                    <!--<select class="form-control" name="user_type">-->
+                                        <!--<option value="customer">异常客户</option>-->
+                                        <!--<option value="employees">不良从业人员</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <div class="form-group">
+                                <label class="col-lg-3 col-sm-3 control-label">IP</label>
+                                <div class="col-lg-4">
+                                    <input name="ip_address" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 col-sm-3 control-label">身份证/护照</label>
+                                <div class="col-lg-4">
+                                    <input name="idcardnumber" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 col-sm-3 control-label">地址</label>
+                                <div class="col-lg-4">
+                                    <input name="user_address" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 col-sm-3 control-label">备注</label>
+                                <div class="col-lg-4">
+                                    <textarea name="remark" type="text" class="form-control" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-offset-3 col-lg-9">
+                                    <button type="submit" class="btn btn-primary">搜索</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+</block>
+
+<block name="script">
+    <script>
+        var indexurl = "{:U('Manage/Logs/index')}";
+
+        $(function(){
+
+            logs.init();
+        })
+
+        logs = {
+            $target : null,
+            pageParams : {},
+            init : function(){
+                this.$target = $('#target');
+                // this.loadList();
+                this.searchEvent();
+            },
+
+            searchEvent : function(){
+
+                var self = this;
+                $('#submit').unbind('click').bind('click',function(){
+
+                    self.pageParams.searchValue = $.trim($('[name=searchValue]').val());
+                    self.pageParams.type = $.trim($('[name=type] option:selected').val());
+
+                    self.loadList();
+                })
+            },
+
+
+            loadList : function(url){
+                var self = this;
+                if(typeof url === 'undefined'){
+                    var url = indexurl;
+                }
+                ajaxReturn(url,this.pageParams,function(){
+                    self.$target.html('努力加载中...');$('#page').empty();
+                },function(res){
+                    if(res.status){
+                        self.$target.html(self.buildHtml(res.info.list));
+                        $('#page').empty().html(res.info.page);
+                        self.checkListEvent();
+                    }else{
+                        layer.alert(res.info,{icon:2});
+                        return;
+                    }
+                })
+            },
+
+            checkListEvent : function(){
+                var self = this;
+                $('.pagination li').bind('click',function(){
+                    var url = $(this).attr('pageurl');
+                    if(url !=''){
+                        self.loadList(url);
+                    }
+                });
+            },
+
+            buildHtml : function(data){
+                var html = '';
+                if(data.length>0){
+
+                    $.each(data,function(k,v){
+                        html += '<tr>'+
+                            '<td>'+v.id+'</td>'+
+                            '<td>'+v.name+'</td>'+
+                            '<td>'+v.phone+'</td>'+
+                            '<td>'+v.email+'</td>'+
+                            '<td>'+v.user_type+'</td>'+
+                            '<td>'+v.ip_address+'</td>'+
+                            '<td>'+v.idcardnumber+'</td>'+
+                            '<td>'+v.user_address+'</td>'+
+                            '<td>'+v.remark+'</td>'+
+                            '</tr>';
+                    });
+                    html += '</tbody>';
+                }else{
+                    html += '<tr><td align="center" colspan="9">暂无数据</td></tr>';
+                }
+                return html;
+            }
+        }
+    </script>
+</block>
