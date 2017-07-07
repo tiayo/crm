@@ -15,6 +15,6 @@ class Example extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'admin_index_service';
+        return 'admin_example_index_service';
     }
 }

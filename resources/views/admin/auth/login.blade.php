@@ -1,68 +1,74 @@
-@extends('admin.layouts.app')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" href="#" type="image/png">
 
-@section('content')
+    <title>Login</title>
+
+    <link href="/static/adminex/css/style.css" rel="stylesheet">
+    <link href="/static/adminex/css/style-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/static/adminex/js/html5shiv.js"></script>
+    <script src="/static/adminex/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="login-body">
+
 <div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('admin.login') }}">
-                        {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
-                                </button>
-
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    Forgot Your Password?
-                                </a>
-                            </div>
-                        </div>
-                    </form>
+    <div class="form-signin" action="index.html">
+        <div class="form-signin-heading text-center">
+            <h1 class="sign-title">管理登录</h1>
+            <img src="/admin/media/image/logo.png" width="70%" alt=""/>
+        </div>
+        <div class="login-wrap">
+            <form method="post" action="{{ route('admin.login') }}">
+                {{ csrf_field() }}
+                <input type="text" class="form-control" placeholder="输入邮箱" autofocus name="email" value="{{ $old_input['email'] }}" required>
+                <input type="password" class="form-control" placeholder="密码" name="password" required>
+                <input class="form-control" type="text" placeholder="验证码" name="code" required>
+                <img  height="40" style="margin-bottom: 1em;" alt="验证码" title="点击刷新" src="{{ route('captcha', ['group' => 'login']) }}" onclick="javascript:this.src=this.src+'?time='+Math.random()">
+                <!--错误输出-->
+                <div class="form-group">
+                    <div class="alert alert-danger fade in @if(!count($errors) > 0) hidden @endif" id="alert_error">
+                        <a href="#" class="close" data-dismiss="alert">×</a>
+                        <span>
+                            @if ($errors->has('email') || $errors->has('password'))
+                                邮箱或密码错误！
+                            @elseif ($errors->has('code'))
+                                验证码错误！
+                            @endif
+                        </span>
+                    </div>
                 </div>
+                <button class="btn btn-lg btn-login btn-block" type="submit">
+                    <i class="fa fa-check"></i>
+                </button>
+            </form>
+            <div class="registration">
+                还没有帐号?
+                <a class="" href="/manage/register">
+                    注册
+                </a>
             </div>
         </div>
     </div>
+
 </div>
-@endsection
+
+
+
+<!-- Placed js at the end of the document so the pages load faster -->
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/static/adminex/js/jquery-1.10.2.min.js"></script>
+<script src="/static/adminex/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -13,7 +13,7 @@ class Plugin extends Model
         'name',
         'alias',
         'author',
-        'edition',
+        'version',
         'status',
         'description'
 

@@ -6,6 +6,8 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "barryvdh/laravel-debugbar": "^2.4",
+        "gregwar/captcha": "^1.1",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0"
     },

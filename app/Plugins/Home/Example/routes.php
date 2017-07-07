@@ -7,6 +7,6 @@
 
 Route::group(['namespace' => 'Plugins\Home\Example\Controller', 'prefix' => 'home'], function () {
 
-    Route::get('/example', 'IndexController@index');
+    Route::get('/example', 'IndexController@index')->name('home_plugin_example');
 
 });

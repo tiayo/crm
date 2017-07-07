@@ -30,3 +30,20 @@ if (!function_exists('plugins_path')) {
         return app_path().'/Plugins/'.$name;
     }
 }
+
+if(!function_exists('plugin_index')) {
+
+}function plugin_index($plugin_id)
+{
+    $info = \App\Model\Plugin::find($plugin_id);
+
+    if ($info['type'] == 1) {
+        $small_type = strtolower(config('plugin.home_path'));
+    } else if($info['type'] == 2) {
+        $small_type = strtolower(config('plugin.home_path'));
+    }
+
+    $small_alias = strtolower($info['alias']);
+
+    return Route($small_type.'_plugin_'.$small_alias);
+}

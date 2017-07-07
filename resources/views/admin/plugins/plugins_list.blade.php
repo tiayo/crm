@@ -2,7 +2,6 @@
 
 @section('style')
     @parent
-    <link href="/Manage/media/css/style.css" rel="stylesheet" />
 @endsection
 
 @section('breadcrumb')
@@ -19,17 +18,6 @@
 @endsection
 
 @section('body')
-<!--搜索中弹窗-->
-<div class="float hidden">
-    <h4 class="text-center">正在为您搜索...</h4>
-    <div class="bs-example m-callback">
-        <div class="style-content">
-            <img src="/Manage/media/image/timg.gif">
-        </div>
-        <p><span class="label label-warning" id="m-callback-update">您需要耐心等待一会,不要刷新页面！</span></p>
-    </div>
-</div>
-
 <div class="row">
     <!--错误输出-->
     <div class="col-md-12 ">
@@ -39,9 +27,10 @@
         </div>
     </div>
 
+    <div class="col-md-12">
 		<section class="panel">
             <header class="panel-heading">
-               	后台插件列表
+               	插件列表
             </header>
             <div class="panel-body">
 
@@ -54,7 +43,7 @@
                             <th>类型</th>
 							<th>作者</th>
 							<th>版本</th>
-							<th>状态</th>
+							<th>状态(点击切换)</th>
 							<th>描述</th>
 							<th>操作</th>
 		                </tr>
@@ -74,22 +63,44 @@
                                 @endif
                             </th>
                             <th>{{$list['author']}}</th>
-                            <th>{{$list['edition']}}</th>
+                            <th>{{$list['version']}}</th>
                             <th>
                                 @if ($list['status'] == 1)
-                                    <button class="btn btn-success btn-xs" type="button">启用中</button>
+                                    <button class="btn btn-success btn-xs" type="button" onclick="location='{{ Route('plugin_status', ['plugin_id' => $list['plugin_id']]) }}'">启用中</button>
                                     @else
-                                    <button class="btn btn-warning btn-xs" type="button">禁用</button>
+                                    <button class="btn btn-warning btn-xs" type="button" onclick="location='{{ Route('plugin_status', ['plugin_id' => $list['plugin_id']]) }}'">禁用</button>
+                                @endif
+
+                                @if ($list['index'] == 1)
+                                    <button class="btn btn-success btn-xs" type="button" onclick="location='{{ Route('plugin_index', ['plugin_id' => $list['plugin_id']]) }}'">前台显示</button>
+                                @else
+                                    <button class="btn btn-warning btn-xs" type="button" onclick="location='{{ Route('plugin_index', ['plugin_id' => $list['plugin_id']]) }}'">前台不显示</button>
+                                @endif
+
+                                @if ($list['install'] == 1)
+                                    <button class="btn btn-success btn-xs" type="button" onclick="location='{{ Route('plugin_uninstall', ['plugin_id' => $list['plugin_id']]) }}'">已安装</button>
+                                @else
+                                    <button class="btn btn-warning btn-xs" type="button" onclick="location='{{ Route('plugin_install', ['plugin_id' => $list['plugin_id']]) }}'">未安装</button>
                                 @endif
                             </th>
                             <th>{{$list['description']}}</th>
                             <th>
+                                {{--其他操作按钮--}}
+                                <button class="btn btn-big btn-info" type="button" onclick="location='{{ plugin_index($list['plugin_id']) }}'">默认首页</button>
+                                <button class="btn btn-big btn-info" type="button" onclick="location='{{ Route('admin_plugins_update_post', ['plugin_id' => $list['plugin_id']]) }}'">设置</button>
 
-                                @if ($list['status'] == 1)
-                                    <button class="btn btn-danger" type="button" onclick="location='{{ Route('plugin_status', ['plugin_id' => $list['plugin_id']]) }}'">关闭</button>
-                                    @else
-                                    <button class="btn btn-success" type="button" onclick="location='{{ Route('plugin_status', ['plugin_id' => $list['plugin_id']]) }}'">启用</button>
-                                @endif
+                                <div class="btn-group">
+                                    <button data-toggle="dropdown" type="button" class="btn btn-success btn-big dropdown-toggle">
+                                        删除插件<span class="caret"></span>
+                                    </button>
+                                    <ul role="menu" class="dropdown-menu">
+                                        <li><a href="javascript:if(confirm('操作不可恢复，确实要删除吗?'))location='{{ Route('admin_plugins_delete', ['plugin_id' => $list['plugin_id'], 'type' => 'only']) }}'">不删除目录文件</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="javascript:if(confirm('操作不可恢复，确实要删除吗?'))location='{{ Route('admin_plugins_delete', ['plugin_id' => $list['plugin_id'], 'type' => 'all']) }}'">全部删除</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">取消</a></li>
+                                    </ul>
+                                </div>
                             </th>
                         </tr>
                         @endforeach
@@ -98,8 +109,8 @@
 		        <div id="page"></div>
         	</div>
     	</section>
-
-	</div>
+    </div>
+</div>
 @endsection
 
 @section('script')

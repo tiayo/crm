@@ -5,8 +5,8 @@
  *
  */
 
-Route::group(['namespace' => 'Plugins\Admin\Example\Controller', 'prefix' => 'admin'], function () {
+Route::group(['namespace' => 'Plugins\Admin\Example\Controllers', 'prefix' => 'admin/example'], function () {
 
-    Route::get('/example', 'IndexController@index');
+    Route::get('/', 'IndexController@index')->name('admin_plugin_example');
 
 });

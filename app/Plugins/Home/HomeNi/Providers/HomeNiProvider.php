@@ -1,12 +1,12 @@
 <?php
 
-namespace Plugins\Admin\Example\Providers;
+namespace Plugins\Home\HomeNi\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Plugins\Admin\Example\Migration\CreateAdminExampleTable;
-use Plugins\Admin\Example\Service\IndexService;
+use Plugins\Home\HomeNi\Migration\CreateHomeHomeNiTable;
+use Plugins\Home\HomeNi\Service\IndexService;
 
-class ExampleProvider extends ServiceProvider
+class HomeNiProvider extends ServiceProvider
 {
     /**
      * 引导应用程序服务
@@ -19,10 +19,10 @@ class ExampleProvider extends ServiceProvider
         $this->loadRoutesFrom(dirname(__DIR__).'/routes.php');
 
         //注册视图
-        $this->loadViewsFrom(dirname(__DIR__).'/views', 'admin_example');
+        $this->loadViewsFrom(dirname(__DIR__).'/views', 'home_homeni');
 
         //注册配置文件
-        $this->mergeConfigFrom(dirname(__DIR__).'/config/config.php', 'admin_example');
+        $this->mergeConfigFrom(dirname(__DIR__).'/config/config.php', 'home_homeni');
 
         //注册数据库迁移文件
         $this->loadMigrationsFrom(dirname(__DIR__).'/Migrations');
@@ -36,12 +36,12 @@ class ExampleProvider extends ServiceProvider
     public function register()
     {
         //绑定容器注入
-        $this->app->singleton('admin_example_index_service', function ($app) {
+        $this->app->singleton('home_homeni_index_service', function ($app) {
             return new IndexService();
         });
 
-        $this->app->singleton('admin_example_migration', function ($app) {
-            return new CreateAdminExampleTable();
+        $this->app->singleton('home_homeni_migration', function ($app) {
+            return new CreateHomeHomeNiTable();
         });
     }
 }

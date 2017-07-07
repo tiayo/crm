@@ -1,0 +1,18 @@
+<?php
+
+namespace Plugins\<<type>>\<<alias>>\Controllers;
+
+use App\Http\Controllers\Controller;
+
+class IndexController extends Controller
+{
+    protected $index;
+
+    public function index()
+    {
+        return view('<<small_type>>_<<small_alias>>::index', [
+            //获取插件配置文件示例
+            'plugins_name' => config('<<small_type>>_<<small_alias>>.plugins_name'),
+        ]);
+    }
+}

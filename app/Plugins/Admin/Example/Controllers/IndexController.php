@@ -1,6 +1,6 @@
 <?php
 
-namespace Plugins\Admin\Example\Controller;
+namespace Plugins\Admin\Example\Controllers;
 
 use App\Http\Controllers\Controller;
 use Plugins\Admin\Example\Service\IndexService;
@@ -30,7 +30,7 @@ class IndexController extends Controller
             'dependency' => $this->index->dependency(),
 
             //容器注入执行结果
-            'app' => app('admin_index_service')->app(),
+            'app' => app('admin_example_index_service')->app(),
 
             //facade执行结果
             'facade' => \Example::facade(),

@@ -39,4 +39,24 @@ class PluginRepositories
     {
         return $this->plugin->find($id);
     }
+
+    public function create($data)
+    {
+        return $this->plugin->create($data);
+    }
+
+    public function countExist($post)
+    {
+        return $this->plugin
+            ->where('type', $post['type'])
+            ->where('alias', $post['alias'])
+            ->count();
+    }
+
+    public function delete($id)
+    {
+        return $this->plugin
+            ->where('plugin_id', $id)
+            ->delete();
+    }
 }

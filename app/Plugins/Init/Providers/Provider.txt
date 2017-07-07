@@ -1,0 +1,47 @@
+<?php
+
+namespace Plugins\<<type>>\<<alias>>\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use Plugins\<<type>>\<<alias>>\Migration\Create<<type>><<alias>>Table;
+use Plugins\<<type>>\<<alias>>\Service\IndexService;
+
+class <<alias>>Provider extends ServiceProvider
+{
+    /**
+     * 引导应用程序服务
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        //注册路由
+        $this->loadRoutesFrom(dirname(__DIR__).'/routes.php');
+
+        //注册视图
+        $this->loadViewsFrom(dirname(__DIR__).'/views', '<<small_type>>_<<small_alias>>');
+
+        //注册配置文件
+        $this->mergeConfigFrom(dirname(__DIR__).'/config/config.php', '<<small_type>>_<<small_alias>>');
+
+        //注册数据库迁移文件
+        $this->loadMigrationsFrom(dirname(__DIR__).'/Migrations');
+    }
+
+    /**
+     * 注册应用程序服务
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //绑定容器注入
+        $this->app->singleton('<<small_type>>_<<small_alias>>_index_service', function ($app) {
+            return new IndexService();
+        });
+
+        $this->app->singleton('<<small_type>>_<<small_alias>>_migration', function ($app) {
+            return new Create<<type>><<alias>>Table();
+        });
+    }
+}

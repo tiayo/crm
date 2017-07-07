@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Service\Admin\AdminService;
 use App\Service\Admin\PluginService;
-use App\Task;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -29,14 +27,4 @@ class AdminController extends Controller
         ]);
     }
 
-    public function test($id, Task $task)
-    {
-        $task = $task->find($id);
-
-        if (!can('admin', 'view', $task)) {
-            return response('被拒绝');
-        }
-
-        var_dump($task->toArray());
-    }
 }
