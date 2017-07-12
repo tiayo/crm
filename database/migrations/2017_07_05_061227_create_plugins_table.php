@@ -19,7 +19,7 @@ class CreatePluginsTable extends Migration
             $table->string('name');
             $table->string('alias')->index();
             $table->string('author');
-            $table->float('version');
+            $table->string('version');
             $table->integer('status')->default(0);
             $table->integer('index')->default(1);
             $table->integer('install')->default(0);

@@ -9,8 +9,8 @@
         <div class="col-md-12">
             <!--breadcrumbs start -->
             <ul class="breadcrumb panel">
-                <li><a href="/"><i class="fa fa-home"></i>主页</a></li>
-                <li class="active">插件列表</li>
+                <li navValue="nav_1"><a href="/"><i class="fa fa-home"></i>主页</a></li>
+                <li navValue="nav_1_2">添加/管理插件</li>
             </ul>
             <!--breadcrumbs end -->
         </div>
@@ -19,6 +19,19 @@
 
 @section('body')
     <div class="col-md-12">
+
+        <!--错误输出-->
+        <div class="form-group">
+            <div class="alert alert-danger fade in @if(!count($errors) > 0) hidden @endif" id="alert_error">
+                <a href="#" class="close" data-dismiss="alert">×</a>
+                <span>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </span>
+            </div>
+        </div>
+
         <section class="panel">
             <header class="panel-heading">
                 添加插件
@@ -34,7 +47,7 @@
                                 <span class="checked">
                                     <div class="radio">
                                         <span class="checked">
-                                            <input type="radio" value="2" name="type" @if($old_input['type'] == 2) checked @endif>
+                                            <input type="radio" value="2" name="type" @if(empty($old_input['type']) || $old_input['type'] == 2) checked @endif>
                                             后台插件
                                         </span>
                                     </div>
@@ -53,7 +66,7 @@
                         </div>
                         @elseif($sign == 'update')
                             <div class="col-sm-3">
-                                <input type="text" class="form-control" value="@if($old_input['type'] == 1) 前台插件 @else 后台插件 @endif" readonly>
+                                <input type="text" class="form-control" name="type" value="@if($old_input['type'] == 1) 前台插件 @else 后台插件 @endif" readonly>
                             </div>
                         @endif
                     </div>
@@ -61,13 +74,13 @@
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">*名称</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" placeholder="" name="name" value="{{ $old_input['name'] }}">
+                            <input type="text" class="form-control" placeholder="" name="name" value="{{ $old_input['name'] }}" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">*别名</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" placeholder="" name="alias" value="{{ $old_input['alias'] }}" @if($sign == 'update') readonly @endif>
+                            <input type="text" class="form-control" placeholder="" name="alias" value="{{ $old_input['alias'] }}" @if($sign == 'update') readonly @endif required>
                         </div>
                         <div class="pull-left">
                             <span class="help-inline">（使用纯英文字母命名，遵循大驼峰命名，例如：ExamplePlugins）</span>
@@ -76,19 +89,19 @@
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">*版本</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" name="version" value="{{ $old_input['version'] }}">
+                            <input type="text" class="form-control" name="version" value="{{ $old_input['version'] }}" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">*作者</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" name="author" value="{{ $old_input['author'] }}">
+                            <input type="text" class="form-control" name="author" value="{{ $old_input['author'] }}" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">*描述</label>
                         <div class="col-sm-3">
-                            <textarea row="3" class="form-control" name="description">{{ $old_input['description'] }}</textarea>
+                            <textarea row="3" class="form-control" name="description" required>{{ $old_input['description'] }}</textarea>
                         </div>
                     </div>
                     <div class="form-group">

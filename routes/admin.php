@@ -24,6 +24,13 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
         Route::get('/', 'AdminController@index')->name('admin');
 
+        Route::get('/sidebar/list', 'SidebarController@view')->name('admin_sidebar_view');
+        Route::get('/sidebar/add', 'SidebarController@createView')->name('admin_sidebar_add');
+        Route::post('/sidebar/add', 'SidebarController@createPost')->name('admin_sidebar_add_post');
+
+
+        Route::get('/administrators/list', 'SidebarController@createPost')->name('admin_administrators_list');
+
         //第三层（设置前缀）
         Route::group(['prefix' => 'plugin'], function () {
             Route::get('/add', 'PluginController@addView')->name('admin_plugins_add');

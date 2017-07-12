@@ -243,9 +243,23 @@ class PluginService
 
         $this->create->destoryFile($file);
 
+        //删除数据库（如果有）
+        try{
+            app(strtolower($type).'_'.strtolower($alias).'_migration')->down();
+        } catch (\Exception $e) {
+
+        }
+
         return true;
     }
 
+    /**
+     * 跳转到对应的插件列表
+     *
+     * @param $plugin_id
+     * @param null $post
+     * @return string
+     */
     public function redirctPlugins($plugin_id, $post = null)
     {
         if (empty($post)) {

@@ -9,8 +9,8 @@
         <div class="col-md-12">
             <!--breadcrumbs start -->
             <ul class="breadcrumb panel">
-                <li><a href="/"><i class="fa fa-home"></i>主页</a></li>
-                <li class="active">插件列表</li>
+                <li navValue="nav_1"><a href="/"><i class="fa fa-home"></i>主页</a></li>
+                <li navValue="nav_1_1">插件列表</li>
             </ul>
             <!--breadcrumbs end -->
         </div>

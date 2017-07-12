@@ -26,7 +26,7 @@
     <div class="form-signin" action="index.html">
         <div class="form-signin-heading text-center">
             <h1 class="sign-title">管理登录</h1>
-            <img src="/admin/media/image/logo.png" width="70%" alt=""/>
+            <img src="/style/media/image/logo.png" width="70%" alt=""/>
         </div>
         <div class="login-wrap">
             <form method="post" action="{{ route('admin.login') }}">

@@ -64,15 +64,20 @@ class PluginController extends Controller
      */
     public function addPost()
     {
+        $messages = [
+            'alias.alpha' => '别名只能由英文字母组成！',
+            'version.max' => '版本不要超过：max个字符！',
+        ];
+
         $this->validate($this->request, [
             'type' => 'required|between:1,2',
             'name' => 'required',
             'alias' => 'required|alpha',
-            'version' => 'required',
+            'version' => 'required|max:10',
             'author' => 'required',
             'description' => 'required',
             'status' => 'required|between:0,1',
-        ]);
+        ], $messages);
 
         try {
             $post = $this->plugins->add($this->request->all());
@@ -179,7 +184,9 @@ class PluginController extends Controller
      */
     public function updateView($plugin_id)
     {
-        $info = $this->plugin_db->find($plugin_id);
+        if (empty($info = $this->request->session()->get('_old_input'))) {
+            $info = $this->plugin_db->find($plugin_id);
+        }
 
         if (empty($info)) {
             return response('插件不存在！');
@@ -200,12 +207,16 @@ class PluginController extends Controller
      */
     public function updatePost($plugin_id)
     {
+        $messages = [
+            'version.max' => '版本不要超过:max个字符！',
+        ];
+
         $this->validate($this->request, [
             'name' => 'required',
-            'version' => 'required',
+            'version' => 'required|max:10',
             'author' => 'required',
             'description' => 'required',
-        ]);
+        ], $messages);
 
         $post = $this->request->all();
 

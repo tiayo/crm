@@ -1,3 +1,5 @@
+@inject('app', 'App\Service\Admin\SidebarService')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,21 +46,7 @@
         </div>
         <!--logo and iconic logo end-->
         <div class="left-side-inner">
-
-            <!--sidebar nav start-->
-            <ul style="margin-top:100px;" class="nav nav-pills nav-stacked custom-nav">
-
-                <li class="menu-list"><a href=""><i class="fa fa-search"></i> <span>插件系统</span></a>
-                    <ul class="sub-menu-list">
-                        <li><a href="{{ Route('admin_plugins_add') }}">添加插件</a></li>
-                        <li><a href="{{ Route('home_plugins') }}">前台插件</a></li>
-                        <li><a href="{{ Route('admin_plugins') }}">后台插件</a></li>
-                    </ul>
-                </li>
-
-            </ul>
-            <!--sidebar nav end-->
-
+            @include('admin.slidebar')
         </div>
     </div>
     <!-- left side end-->
@@ -81,9 +69,21 @@
 
         <!--body wrapper start-->
         <div class="wrapper">
-            @section('breadcrumb')
 
-            @show
+            {{--面包屑开始--}}
+            <div class="row">
+                <div class="col-md-12">
+                    <!--breadcrumbs start -->
+                    <ul class="breadcrumb panel">
+                            <li><a href="/admin"><i class="fa fa-home"></i>主页</a></li>
+                        @foreach(array_reverse($app->breadcrumb(Route::currentRouteName())) as $value)
+                            <li navValue="nav_{{ $value['sidebar_id'] }}">{{ $value['name'] }}</li>
+                        @endforeach
+                    </ul>
+                    <!--breadcrumbs end -->
+                </div>
+            </div>
+            {{--面包屑结束--}}
 
             @section('body')
 
@@ -102,6 +102,7 @@
 
 @section('script')
 <!-- Placed js at the end of the document so the pages load faster -->
+<script src="https://n.tiayo.com/js/app.js"></script>
 <script src="/static/adminex/js/jquery-1.10.2.min.js"></script>
 <script src="/static/adminex/js/jquery-ui-1.9.2.custom.min.js"></script>
 <script src="/static/adminex/js/jquery-migrate-1.2.1.min.js"></script>
@@ -113,9 +114,18 @@
 <script src="/static/adminex/js/iCheck/jquery.icheck.js"></script>
 <script src="/static/adminex/js/icheck-init.js"></script>
 
-
 <!--common scripts for all pages-->
 <script src="/static/adminex/js/scripts.js"></script>
+{{--自动打开菜单层级--}}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var num = $('.breadcrumb li').length;
+        for (i=0; i<=num; i++) {
+            var nav_value = $('.breadcrumb li:eq('+i+')').attr('navValue');
+            $('#'+nav_value).addClass('active nav-active');
+        }
+    })
+</script>
 @show
 </body>
 </html>
