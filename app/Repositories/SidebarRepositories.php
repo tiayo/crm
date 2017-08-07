@@ -15,7 +15,9 @@ class SidebarRepositories
 
     public function all()
     {
-        return $this->sidebar->get();
+        return $this->sidebar
+            ->orderBy('position', 'desc')
+            ->get();
     }
 
     public function getIndex($id)

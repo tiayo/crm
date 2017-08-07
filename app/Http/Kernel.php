@@ -4,6 +4,8 @@ namespace App\Http;
 
 use App\Http\Middleware\AdminAuth;
 use App\Http\Middleware\AdminGuest;
+use App\Http\Middleware\ManageAuth;
+use App\Http\Middleware\ManageGuest;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -60,5 +62,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'adminauth' => AdminAuth::class,
         'adminguest' => AdminGuest::class,
+        'manageauth' => ManageAuth::class,
+        'manageguest' => ManageGuest::class,
     ];
 }

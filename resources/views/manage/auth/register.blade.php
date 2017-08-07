@@ -5,9 +5,9 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">系统管理员注册</div>
+                <div class="panel-heading">平台商管理员注册</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('admin.register') }}">
+                    <form class="form-horizontal" method="POST" action="{{ route('manage.register') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">

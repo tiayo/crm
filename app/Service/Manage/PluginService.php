@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Admin;
+namespace App\Service\Manage;
 
 use App\Repositories\PluginRepositories;
 

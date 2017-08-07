@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSidebarTable extends Migration
+class CreateManagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateSidebarTable extends Migration
      */
     public function up()
     {
-        Schema::create('sidebars', function (Blueprint $table) {
-            $table->increments('siderbar_id');
+        Schema::create('manages', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('name');
-            $table->string('route')->nullable(null);
-            $table->string('route')->index();
-            $table->integer('index');
-            $table->integer('parent');
-            $table->integer('position');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ class CreateSidebarTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sidebars');
+        Schema::dropIfExists('manages');
     }
 }

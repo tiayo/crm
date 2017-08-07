@@ -1,16 +1,21 @@
 <?php
 
-namespace App\Service\Admin;
+namespace App\Service\Manage;
 
+use App\Http\Controllers\RedisController;
 use App\Repositories\SidebarRepositories;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 
 class SidebarService
 {
     protected $sidebar;
+    protected $redis;
 
-    public function __construct(SidebarRepositories $sidebar)
+    public function __construct(SidebarRepositories $sidebar, RedisController $redis)
     {
         $this->sidebar = $sidebar;
+        $this->redis = $redis;
     }
 
     public function all()
@@ -20,7 +25,23 @@ class SidebarService
 
     public function allOutIndex()
     {
-        return $lists = $this->sidebar->getIndex(1)->toArray();
+        //从redis获取缓存
+        $cache = Redis::get('sidebar:'.Auth::guard('manage')->id());
+
+        if (empty($cache)) {
+
+            //获取数据
+            $cache = $this->sidebar->getIndex(1)->toArray();
+
+            //存储到redis(过期时间：30分钟)
+            Redis::setex('sidebar:'.Auth::guard('manage')->id(), 1800, json_encode($cache));
+        } else {
+
+            //取出缓存转为数组
+            $cache = json_decode($cache, true);
+        }
+
+        return $cache;
     }
 
     public function addParent($lists)
@@ -147,9 +168,15 @@ class SidebarService
         $map['position'] = $post['position'];
 
         if (!empty($id) && $type == 'update') {
-            return $this->sidebar->update($id, $map);
+            //更新
+            $this->sidebar->update($id, $map);
+        } else {
+            //创建
+            $this->sidebar->create($map);
         }
-        return $this->sidebar->create($map);
+
+        //清空redis数据库缓存
+        return $this->redis->redisMultiDelete('sidebar');
     }
 
     public function breadcrumb($route)
@@ -173,6 +200,9 @@ class SidebarService
 
     public function destroy($id)
     {
-        return $this->sidebar->delete($id);
+        $this->sidebar->delete($id);
+
+        //清空redis数据库缓存
+        return $this->redis->redisMultiDelete('sidebar');
     }
 }

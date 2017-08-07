@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Manage;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\PluginRepositories;
-use App\Service\Admin\PluginService;
+use App\Service\Manage\PluginService;
 use Illuminate\Http\Request;
 
 class PluginController extends Controller
@@ -27,7 +27,7 @@ class PluginController extends Controller
      */
     public function adminPlugins()
     {
-        return view('admin.plugins.plugins_list', [
+        return view('manage.plugins.plugins_list', [
             'lists' => $this->plugins->lists(2),
         ]);
     }
@@ -39,7 +39,7 @@ class PluginController extends Controller
      */
     public function homePlugins()
     {
-        return view('admin.plugins.plugins_list', [
+        return view('manage.plugins.plugins_list', [
             'lists' => $this->plugins->lists(1),
         ]);
     }
@@ -51,9 +51,9 @@ class PluginController extends Controller
      */
     public function addView()
     {
-        return view('admin.plugins.plugins_add_or_update', [
+        return view('manage.plugins.plugins_add_or_update', [
             'old_input' => $this->request->session()->get('_old_input'),
-            'url' => Route('admin_plugins_add_post'),
+            'url' => Route('plugins_add'),
             'sign' => 'add',
         ]);
     }
@@ -192,9 +192,9 @@ class PluginController extends Controller
             return response('插件不存在！');
         }
 
-        return view('admin.plugins.plugins_add_or_update', [
+        return view('manage.plugins.plugins_add_or_update', [
             'old_input' =>  $info,
-            'url' => Route('admin_plugins_update_post', ['plugin_id' => $plugin_id]),
+            'url' => Route('manage_plugins_update_post', ['plugin_id' => $plugin_id]),
             'sign' => 'update'
         ]);
     }

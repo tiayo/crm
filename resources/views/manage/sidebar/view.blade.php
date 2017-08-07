@@ -1,4 +1,4 @@
-@extends('admin.layouts.admin')
+@extends('manage.layouts.manage')
 
 @section('style')
     @parent
@@ -34,6 +34,7 @@
                             <th>父级</th>
                             <th>路由</th>
                             <th>状态</th>
+                            <th>位置</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -48,13 +49,14 @@
                                 <th>
                                     @if ($list['index'] == 1)
                                         显示中
-                                    @elseif ($list['type'] == 2)
+                                    @elseif ($list['index'] == 0)
                                         未显示
                                     @endif
                                 </th>
+                                <th>{{ $list['position'] }}</th>
                                 <th>
-                                    <button class="btn btn-success btn-big" type="button" onclick="location=''">修改</button>
-                                    <button class="btn btn-danger btn-big" type="button" onclick="location=''">删除</button>
+                                    <button class="btn btn-success btn-big" type="button" onclick="location='{{ Route('manage_sidebar_update', ['id' => $list['sidebar_id'], 'type' => 'update']) }}'">修改</button>
+                                    <button class="btn btn-danger btn-big" type="button" onclick="if(confirm('删除后不可恢复，确定要删除吗？') === false)return false;location='{{ Route('manage_sidebar_destroy', ['id' => $list['sidebar_id']]) }}'">删除</button>
                                 </th>
                             </tr>
                         @endforeach

@@ -25,11 +25,11 @@
 
     <div class="form-signin" action="index.html">
         <div class="form-signin-heading text-center">
-            <h1 class="sign-title">系统管理员管理登录</h1>
+            <h1 class="sign-title">平台商管理登录</h1>
             <img src="/style/media/image/logo.png" width="70%" alt=""/>
         </div>
         <div class="login-wrap">
-            <form method="post" action="{{ route('admin.login') }}">
+            <form method="post" action="{{ route('manage.login') }}">
                 {{ csrf_field() }}
                 <input type="text" class="form-control" placeholder="输入邮箱" autofocus name="email" value="{{ $old_input['email'] }}" required>
                 <input type="password" class="form-control" placeholder="密码" name="password" required>

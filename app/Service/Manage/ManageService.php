@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Service\Admin;
+namespace App\Service\Manage;
 
 use App\Admin;
 use App\Http\Controllers\Controller;
 use App\Repositories\AdminRepositories;
 use Illuminate\Support\Facades\Auth;
 
-class AdminService extends Controller
+class ManageService extends Controller
 {
     protected $admin;
 

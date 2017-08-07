@@ -1,4 +1,4 @@
-@inject('app', 'App\Service\Admin\SidebarService')
+@inject('app', 'App\Service\Manage\SidebarService')
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +46,7 @@
         </div>
         <!--logo and iconic logo end-->
         <div class="left-side-inner">
-            @include('admin.slidebar')
+            @include('manage.layouts.slidebar')
         </div>
     </div>
     <!-- left side end-->
@@ -60,7 +60,7 @@
                 <!--toggle button start-->
                 <a class="toggle-btn"><i class="fa fa-bars"></i></a>
                 <if condition="can('status', [session('user.id') ? : 0])">
-                    <a class="pull-right" style="line-height: 50px;" href="{{ Route('admin.logout') }}">退出登录</a>
+                    <a class="pull-right" style="line-height: 50px;" href="{{ Route('manage.logout') }}">退出登录</a>
                 </if>
                 <!--toggle button end-->
             </div>
@@ -75,7 +75,7 @@
                 <div class="col-md-12">
                     <!--breadcrumbs start -->
                     <ul class="breadcrumb panel">
-                            <li><a href="/admin"><i class="fa fa-home"></i>主页</a></li>
+                            <li><a href="/manage"><i class="fa fa-home"></i>主页</a></li>
                         @foreach($breadcrumb = array_reverse($app->breadcrumb(Route::currentRouteName())) as $value)
                             <li navValue="nav_{{ $value['sidebar_id'] }}">{{ $value['name'] }}</li>
                         @endforeach

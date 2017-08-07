@@ -1,4 +1,4 @@
-@extends('admin.layouts.admin')
+@extends('manage.layouts.manage')
 
 @section('style')
     @parent

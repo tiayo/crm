@@ -1,4 +1,4 @@
-@extends('admin.layouts.admin')
+@extends('manage.layouts.manage')
 
 @section('style')
     @parent
@@ -87,16 +87,16 @@
                             <th>
                                 {{--其他操作按钮--}}
                                 <button class="btn btn-big btn-info" type="button" onclick="location='{{ plugin_index($list['plugin_id']) }}'">默认首页</button>
-                                <button class="btn btn-big btn-info" type="button" onclick="location='{{ Route('admin_plugins_update_post', ['plugin_id' => $list['plugin_id']]) }}'">设置</button>
+                                <button class="btn btn-big btn-info" type="button" onclick="location='{{ Route('plugins_update', ['plugin_id' => $list['plugin_id']]) }}'">设置</button>
 
                                 <div class="btn-group">
                                     <button data-toggle="dropdown" type="button" class="btn btn-success btn-big dropdown-toggle">
                                         删除插件<span class="caret"></span>
                                     </button>
                                     <ul role="menu" class="dropdown-menu">
-                                        <li><a href="javascript:if(confirm('操作不可恢复，确实要删除吗?'))location='{{ Route('admin_plugins_delete', ['plugin_id' => $list['plugin_id'], 'type' => 'only']) }}'">不删除目录文件</a></li>
+                                        <li><a href="javascript:if(confirm('操作不可恢复，确实要删除吗?'))location='{{ Route('plugins_delete', ['plugin_id' => $list['plugin_id'], 'type' => 'only']) }}'">不删除目录文件</a></li>
                                         <li class="divider"></li>
-                                        <li><a href="javascript:if(confirm('操作不可恢复，确实要删除吗?'))location='{{ Route('admin_plugins_delete', ['plugin_id' => $list['plugin_id'], 'type' => 'all']) }}'">全部删除</a></li>
+                                        <li><a href="javascript:if(confirm('操作不可恢复，确实要删除吗?'))location='{{ Route('plugins_delete', ['plugin_id' => $list['plugin_id'], 'type' => 'all']) }}'">全部删除</a></li>
                                         <li class="divider"></li>
                                         <li><a href="#">取消</a></li>
                                     </ul>
