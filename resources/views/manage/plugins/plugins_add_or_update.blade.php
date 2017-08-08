@@ -4,19 +4,6 @@
     @parent
 @endsection
 
-@section('breadcrumb')
-    <div class="row">
-        <div class="col-md-12">
-            <!--breadcrumbs start -->
-            <ul class="breadcrumb panel">
-                <li navValue="nav_1"><a href="/"><i class="fa fa-home"></i>主页</a></li>
-                <li navValue="nav_1_2">添加/管理插件</li>
-            </ul>
-            <!--breadcrumbs end -->
-        </div>
-    </div>
-@endsection
-
 @section('body')
     <div class="col-md-12">
 

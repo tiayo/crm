@@ -31,7 +31,7 @@
         <div class="login-wrap">
             <form method="post" action="{{ route('manage.login') }}">
                 {{ csrf_field() }}
-                <input type="text" class="form-control" placeholder="输入邮箱" autofocus name="email" value="{{ $old_input['email'] }}" required>
+                <input type="text" class="form-control" placeholder="输入用户名" autofocus name="name" value="{{ $old_input['name'] }}" required>
                 <input type="password" class="form-control" placeholder="密码" name="password" required>
                 <input class="form-control" type="text" placeholder="验证码" name="code" required>
                 <img  height="40" style="margin-bottom: 1em;" alt="验证码" title="点击刷新" src="{{ route('captcha', ['group' => 'login']) }}" onclick="javascript:this.src=this.src+'?time='+Math.random()">
@@ -40,7 +40,7 @@
                     <div class="alert alert-danger fade in @if(!count($errors) > 0) hidden @endif" id="alert_error">
                         <a href="#" class="close" data-dismiss="alert">×</a>
                         <span>
-                            @if ($errors->has('email') || $errors->has('password'))
+                            @if ($errors->has('name') || $errors->has('password'))
                                 邮箱或密码错误！
                             @elseif ($errors->has('code'))
                                 验证码错误！

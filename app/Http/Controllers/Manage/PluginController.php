@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Manage;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\PluginRepositories;
-use App\Service\Manage\PluginService;
+use App\Services\Manage\PluginService;
 use Illuminate\Http\Request;
 
 class PluginController extends Controller
@@ -25,7 +25,7 @@ class PluginController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function adminPlugins()
+    public function managePlugins()
     {
         return view('manage.plugins.plugins_list', [
             'lists' => $this->plugins->lists(2),
@@ -37,7 +37,7 @@ class PluginController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function homePlugins()
+    public function userPlugins()
     {
         return view('manage.plugins.plugins_list', [
             'lists' => $this->plugins->lists(1),
@@ -85,7 +85,7 @@ class PluginController extends Controller
             return response($e->getMessage());
         }
 
-        $route = $this->plugins->redirctPlugins($post['id'], $post);
+        $route = $this->plugins->redirctPlugins($post['id'], ['type' => $this->request->get('type')]);
 
         return redirect()->route($route);
     }
@@ -194,8 +194,9 @@ class PluginController extends Controller
 
         return view('manage.plugins.plugins_add_or_update', [
             'old_input' =>  $info,
-            'url' => Route('manage_plugins_update_post', ['plugin_id' => $plugin_id]),
-            'sign' => 'update'
+            'url' => Route('plugins_update', ['plugin_id' => $plugin_id]),
+            'sign' => 'update',
+            'parent_breadcrumb' => $info['type'] == 1 ? 'user_plugins' : 'manage_plugins',
         ]);
     }
 

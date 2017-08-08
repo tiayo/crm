@@ -17,4 +17,9 @@ class ManageRepositories
     {
         return $this->manage->create($data);
     }
+
+    public function get()
+    {
+        return $this->manage->get();
+    }
 }

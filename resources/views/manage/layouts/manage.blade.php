@@ -1,4 +1,4 @@
-@inject('app', 'App\Service\Manage\SidebarService')
+@inject('app', 'App\Services\Manage\SidebarService')
 
 <!DOCTYPE html>
 <html lang="en">
@@ -75,10 +75,20 @@
                 <div class="col-md-12">
                     <!--breadcrumbs start -->
                     <ul class="breadcrumb panel">
-                            <li><a href="/manage"><i class="fa fa-home"></i>主页</a></li>
-                        @foreach($breadcrumb = array_reverse($app->breadcrumb(Route::currentRouteName())) as $value)
-                            <li navValue="nav_{{ $value['sidebar_id'] }}">{{ $value['name'] }}</li>
-                        @endforeach
+                        <li><a href="/manage"><i class="fa fa-home"></i>主页</a></li>
+
+                        @if (!empty($parent_breadcrumb))
+                            @foreach($breadcrumb = array_reverse($app->breadcrumb($parent_breadcrumb)) as $value)
+                                <li navValue="nav_{{ $value['sidebar_id'] }}">{{ $value['name'] }}</li>
+                            @endforeach
+
+                            @else
+
+                            @foreach($breadcrumb = array_reverse($app->breadcrumb(Route::currentRouteName())) as $value)
+                                <li navValue="nav_{{ $value['sidebar_id'] }}">{{ $value['name'] }}</li>
+                            @endforeach
+                        @endif
+
                         @if(empty($breadcrumb))
                             <li navValue="nav_0">菜单管理</li>
                         @endif
@@ -105,7 +115,6 @@
 
 @section('script')
 <!-- Placed js at the end of the document so the pages load faster -->
-<script src="https://n.tiayo.com/js/app.js"></script>
 <script src="/static/adminex/js/jquery-1.10.2.min.js"></script>
 <script src="/static/adminex/js/jquery-ui-1.9.2.custom.min.js"></script>
 <script src="/static/adminex/js/jquery-migrate-1.2.1.min.js"></script>

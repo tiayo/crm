@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Manage\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Service\Manage\Auth\LoginService;
+use App\Services\Manage\Auth\LoginService;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -28,7 +28,7 @@ class LoginController extends Controller
     {
         //验证
         $this->validate($this->request, [
-            $this->username() => 'required|email',
+            $this->username() => 'required',
             'password' => 'required|string',
             'code' => 'required|string|size:5',
         ]);
@@ -46,7 +46,7 @@ class LoginController extends Controller
         if ($code != $session_code) {
             $errors = ['code' => '验证码错误！'];
         } else if ($this->login->login($this->username(), $username, $password)) {
-            return redirect()->route('manage');
+            return redirect()->back();
         }
 
        return redirect()->route('manage.login')
@@ -67,6 +67,6 @@ class LoginController extends Controller
 
     public function username()
     {
-        return 'email';
+        return 'name';
     }
 }
