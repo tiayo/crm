@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Home\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Service\Admin\PluginService;
+use App\Services\Manage\PluginService;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -47,5 +47,10 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         return view('home.auth.login');
+    }
+
+    public function username()
+    {
+        return 'name';
     }
 }

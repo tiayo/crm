@@ -22,26 +22,28 @@ Route::group(['namespace' => 'Manage', 'prefix' => 'manage'], function () {
     //第二层（设置登录中间件）
     Route::group(['middleware' => 'manageauth'], function () {
 
-        Route::get('/', 'ManageController@index')->name('manage');
+        // ---------------------------首页--------------------------- //
+        Route::get('/', 'IndexController@index')->name('manage');
 
+        // ---------------------------操作菜单管理--------------------------- //
         Route::get('/sidebar/list', 'SidebarController@view')->name('manage_sidebar_view');
         Route::get('/sidebar/add', 'SidebarController@createView')->name('manage_sidebar_add');
         Route::post('/sidebar/add', 'SidebarController@createOrUpdate');
 
         Route::get('/sidebar/update/{id}/{type}', 'SidebarController@update')->name('manage_sidebar_update');
         Route::post('/sidebar/update/{id}/{type}', 'SidebarController@createOrUpdate');
-
-
-        Route::get('/administrators/list', 'SidebarController@createPost')->name('manage_administrators_list');
-
         Route::get('/sidebar/destroy/{id}', 'SidebarController@destroy')->name('manage_sidebar_destroy');
 
+        // ---------------------------操作管理员管理--------------------------- //
+        Route::get('/manager/list', 'ManagerController@view')->name('manager_list');
+
+        // ---------------------------操作插件管理--------------------------- //
         //第三层（设置前缀）
         Route::group(['prefix' => 'plugin'], function () {
             Route::get('/add', 'PluginController@addView')->name('plugins_add');
             Route::post('/add', 'PluginController@addPost');
-            Route::get('/admin_plugins', 'PluginController@adminPlugins')->name('manage_plugins');
-            Route::get('/home_plugins', 'PluginController@homePlugins')->name('home_plugins');
+            Route::get('/manage_plugins', 'PluginController@managePlugins')->name('manage_plugins');
+            Route::get('/user_plugins', 'PluginController@userPlugins')->name('user_plugins');
             Route::get('/plugin_status/{plugin_id}', 'PluginController@pluginStatus')->name('plugin_status');
             Route::get('/plugin_index/{plugin_id}', 'PluginController@pluginIndex')->name('plugin_index');
 
@@ -52,8 +54,6 @@ Route::group(['namespace' => 'Manage', 'prefix' => 'manage'], function () {
 
             Route::get('/install/{plugin_id}', 'PluginController@install')->name('plugin_install');
             Route::get('/uninstall/{plugin_id}', 'PluginController@uninstall')->name('plugin_uninstall');
-
-
         });
     });
 });

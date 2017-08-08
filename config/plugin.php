@@ -3,8 +3,8 @@
 return [
 
     //后台模块文件夹名称
-    'admin_path' => 'Admin',
+    'manage_path' => 'Manage',
 
     //前台模块文件夹名称
-    'home_path' => 'Home',
+    'user_path' => 'User',
 ];

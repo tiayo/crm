@@ -24,7 +24,7 @@ class PluginRepositories
     {
         return $this->plugin
             ->where('type', $type)
-            ->orderby('updated_at', 'desc')
+            ->orderby('plugin_id', 'desc')
             ->get();
     }
 

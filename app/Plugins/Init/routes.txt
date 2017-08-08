@@ -5,7 +5,7 @@
  *
  */
 
-Route::group(['namespace' => 'Plugins\<<type>>\<<alias>>\Controllers', 'prefix' => 'admin/<<small_alias>>'], function () {
+Route::group(['middleware' => ['web', '<<small_type>>auth'], 'namespace' => 'Plugins\<<type>>\<<alias>>\Controllers', 'prefix' => '<<small_type>>/<<small_alias>>'], function () {
 
     Route::get('/', 'IndexController@index')->name('<<small_type>>_plugin_<<small_alias>>');
 

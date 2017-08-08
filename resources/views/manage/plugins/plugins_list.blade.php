@@ -4,19 +4,6 @@
     @parent
 @endsection
 
-@section('breadcrumb')
-    <div class="row">
-        <div class="col-md-12">
-            <!--breadcrumbs start -->
-            <ul class="breadcrumb panel">
-                <li navValue="nav_1"><a href="/"><i class="fa fa-home"></i>主页</a></li>
-                <li navValue="nav_1_1">插件列表</li>
-            </ul>
-            <!--breadcrumbs end -->
-        </div>
-    </div>
-@endsection
-
 @section('body')
 <div class="row">
     <!--错误输出-->
@@ -86,10 +73,10 @@
                             <th>{{$list['description']}}</th>
                             <th>
                                 {{--其他操作按钮--}}
-                                <button class="btn btn-big btn-info" type="button" onclick="location='{{ plugin_index($list['plugin_id']) }}'">默认首页</button>
+                                <button class="btn btn-big btn-info" type="button" onclick="window.open('{{ plugin_index($list['plugin_id']) }}')">默认首页</button>
                                 <button class="btn btn-big btn-info" type="button" onclick="location='{{ Route('plugins_update', ['plugin_id' => $list['plugin_id']]) }}'">设置</button>
 
-                                <div class="btn-group">
+                                <div class="btn-group @if($list['plugin_id'] == 0) hidden @endif">
                                     <button data-toggle="dropdown" type="button" class="btn btn-success btn-big dropdown-toggle">
                                         删除插件<span class="caret"></span>
                                     </button>
