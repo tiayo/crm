@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateManagesTable extends Migration
+class CreateManagergroupTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateManagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('manages', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('managergroups', function (Blueprint $table) {
+            $table->increments('managergroup_id');
             $table->string('name')->unique();
-            $table->string('email')->unique();
-            $table->tinyInteger('type');
-            $table->integer('group');
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('rule');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateManagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('manages');
+        Schema::dropIfExists('managergroups');
     }
 }

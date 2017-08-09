@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Model\Sidebar;
 
-class SidebarRepositories
+class SidebarRepository
 {
     protected $sidebar;
 

@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Model\Manage;
 
-class ManageRepositories
+class ManageRepository
 {
     protected $manage;
 

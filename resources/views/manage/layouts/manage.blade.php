@@ -128,6 +128,7 @@
 
 <!--common scripts for all pages-->
 <script src="/static/adminex/js/scripts.js"></script>
+
 {{--自动打开菜单层级--}}
 <script type="text/javascript">
     $(document).ready(function () {

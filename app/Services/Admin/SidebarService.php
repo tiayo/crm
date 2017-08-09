@@ -2,13 +2,13 @@
 
 namespace App\Services\Admin;
 
-use App\Repositories\SidebarRepositories;
+use App\Repositories\SidebarRepository;
 
 class SidebarService
 {
     protected $sidebar;
 
-    public function __construct(SidebarRepositories $sidebar)
+    public function __construct(SidebarRepository $sidebar)
     {
         $this->sidebar = $sidebar;
     }
