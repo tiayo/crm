@@ -35,7 +35,16 @@ Route::group(['namespace' => 'Manage', 'prefix' => 'manage'], function () {
         Route::get('/sidebar/destroy/{id}', 'SidebarController@destroy')->name('manage_sidebar_destroy');
 
         // ---------------------------操作管理员管理--------------------------- //
-        Route::get('/manager/list', 'ManagerController@view')->name('manager_list');
+        Route::get('/manager/list', 'ManagerController@listView')->name('manager_list');
+        Route::get('/manager/add', 'ManagerController@addView')->name('manager_add');
+        Route::post('/manager/add', 'ManagerController@addPost');
+
+        // ---------------------------操作管理员管理 分组管理--------------------------- //
+        Route::get('/managergroup/list', 'ManagerGroupController@listView')->name('managergroup_list');
+        Route::get('/managergroup/add', 'ManagerGroupController@addView')->name('managergroup_add');
+        Route::post('/managergroup/add', 'ManagerGroupController@post');
+        Route::get('/managergroup/update/{id}', 'ManagerGroupController@updateView')->name('managergroup_update');
+        Route::post('/managergroup/update/{id}', 'ManagerGroupController@post');
 
         // ---------------------------操作插件管理--------------------------- //
         //第三层（设置前缀）

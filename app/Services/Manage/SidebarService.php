@@ -2,7 +2,7 @@
 
 namespace App\Services\Manage;
 
-use App\Repositories\SidebarRepositories;
+use App\Repositories\SidebarRepository;
 use App\Services\RedisServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +13,7 @@ class SidebarService
     protected $redis;
     protected $request;
 
-    public function __construct(SidebarRepositories $sidebar, RedisServiceInterface $redis, Request $request)
+    public function __construct(SidebarRepository $sidebar, RedisServiceInterface $redis, Request $request)
     {
         $this->sidebar = $sidebar;
         $this->redis = $redis;

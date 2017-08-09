@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Model\Plugin;
 
-class PluginRepositories
+class PluginRepository
 {
     protected $plugin;
 

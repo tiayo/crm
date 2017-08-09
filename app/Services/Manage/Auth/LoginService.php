@@ -3,14 +3,14 @@
 namespace App\Services\Manage\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\AdminRepositories;
+use App\Repositories\AdminRepository;
 use Illuminate\Support\Facades\Auth;
 
 class LoginService extends Controller
 {
     protected $admin;
 
-    public function __construct(AdminRepositories $admin)
+    public function __construct(AdminRepository $admin)
     {
         $this->admin = $admin;
     }

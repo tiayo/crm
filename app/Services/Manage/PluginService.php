@@ -2,14 +2,14 @@
 
 namespace App\Services\Manage;
 
-use App\Repositories\PluginRepositories;
+use App\Repositories\PluginRepository;
 
 class PluginService
 {
     protected $plugin;
     protected $create;
 
-    public function __construct(PluginRepositories $plugin, CreatePluginService $create)
+    public function __construct(PluginRepository $plugin, CreatePluginService $create)
     {
         $this->plugin = $plugin;
         $this->create = $create;

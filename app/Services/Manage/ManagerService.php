@@ -2,13 +2,13 @@
 
 namespace App\Services\Manage;
 
-use App\Repositories\ManageRepositories;
+use App\Repositories\ManageRepository;
 
 class ManagerService
 {
     protected $manage;
 
-    public function __construct(ManageRepositories $manage)
+    public function __construct(ManageRepository $manage)
     {
         $this->manage = $manage;
     }

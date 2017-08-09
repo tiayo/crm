@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Manage;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\PluginRepositories;
+use App\Repositories\PluginRepository;
 use App\Services\Manage\PluginService;
 use Illuminate\Http\Request;
 
@@ -13,7 +13,7 @@ class PluginController extends Controller
     protected $request;
     protected $plugin_db;
 
-    public function __construct(PluginService $plugin, Request $request, PluginRepositories $plugin_db)
+    public function __construct(PluginService $plugin, Request $request, PluginRepository $plugin_db)
     {
         $this->plugins = $plugin;
         $this->request = $request;

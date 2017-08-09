@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Model\Admin;
 
-class AdminRepositories
+class AdminRepository
 {
     protected $admin;
 

@@ -3,14 +3,14 @@
 namespace App\Services\Manage\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\ManageRepositories;
+use App\Repositories\ManageRepository;
 use Illuminate\Support\Facades\Auth;
 
 class RegisterService extends Controller
 {
     protected $manage;
 
-    public function __construct(ManageRepositories $manage)
+    public function __construct(ManageRepository $manage)
     {
         $this->manage = $manage;
     }
