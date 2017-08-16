@@ -15,6 +15,7 @@ class CreateManagergroupTable extends Migration
     {
         Schema::create('managergroups', function (Blueprint $table) {
             $table->increments('managergroup_id');
+            $table->integer('parent_id');
             $table->string('name')->unique();
             $table->string('rule');
             $table->timestamps();

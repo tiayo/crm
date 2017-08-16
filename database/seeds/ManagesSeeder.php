@@ -12,21 +12,29 @@ class ManagesSeeder extends Seeder
     public function run(\App\Model\Managergroup $managergroup)
     {
         //清除表
-        App\Model\Manage::truncate();
+        App\Model\Manager::truncate();
 
-        factory(App\Model\Manage::class)->create([
+        factory(App\Model\Manager::class)->create([
             'name' => 'manage',
             'email' => '656861622@qq.com',
             'type' => 1,
-            'group' => $managergroup->first()['managergroup_id'],
+            'group' => 0,
             'password' => bcrypt('654321'),
         ]);
 
-        factory(App\Model\Manage::class)->create([
+        factory(App\Model\Manager::class)->create([
             'name' => 'admin',
             'email' => '474993693@qq.com',
             'type' => 2,
-            'group' => $managergroup->skip(1)->first()['managergroup_id'],
+            'group' => $managergroup->orderby('managergroup_id')->first()['managergroup_id'],
+            'password' => bcrypt('654321'),
+        ]);
+
+        factory(App\Model\Manager::class)->create([
+            'name' => 'plugins',
+            'email' => 'admin@qq.com',
+            'type' => 2,
+            'group' => $managergroup->skip(1)->orderby('managergroup_id')->first()['managergroup_id'],
             'password' => bcrypt('654321'),
         ]);
     }

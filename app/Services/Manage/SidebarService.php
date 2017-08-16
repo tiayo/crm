@@ -38,14 +38,14 @@ class SidebarService
     public function allOutIndex()
     {
         //从redis获取缓存
-        $cache = $this->redis->redisSingleGet('sidebar:'.Auth::guard('manage')->id());
+        $cache = $this->redis->redisSingleGet('sidebar:'.Auth::guard('manager')->id());
 
         if (empty($cache)) {
             //获取数据
             $cache = $this->sidebar->getIndex(1)->toArray();
 
             //存储到redis(过期时间：30分钟)
-            $this->redis->redisSingleAdd('sidebar:'.Auth::guard('manage')->id(), $cache, 1800);
+            $this->redis->redisSingleAdd('sidebar:'.Auth::guard('manager')->id(), $cache, 1800);
         } else {
             //取出缓存转为数组
 

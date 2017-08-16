@@ -56,13 +56,20 @@
 
         <!-- header section start-->
         <div class="header-section">
-            <div class="col-md-10">
-                <!--toggle button start-->
-                <a class="toggle-btn"><i class="fa fa-bars"></i></a>
-                <if condition="can('status', [session('user.id') ? : 0])">
-                    <a class="pull-right" style="line-height: 50px;" href="{{ Route('manage.logout') }}">退出登录</a>
-                </if>
-                <!--toggle button end-->
+            <div class="menu-right">
+                <ul class="notification-menu">
+                    <li>
+                        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            当前帐号:
+                            {{ Auth::guard('manager')->user()['name'] }}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+                            <li><a href="{{ route('manage.logout') }}"><i class="fa fa-sign-out"></i>退出登录</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
             </div>
         </div>
         <!-- header section end-->
@@ -105,7 +112,7 @@
         <!--body wrapper end-->
 
         <!--footer section start-->
-        <footer>Copyright © 2015 - 2017 startce. All Rights Reserved  <strong>v0.01</strong></footer>
+        <footer>Copyright © 2015 - {{ date('Y') }} startce. All Rights Reserved  <strong>v3.0.0</strong></footer>
         <!--footer section end-->
 
 

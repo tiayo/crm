@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Admin\SidebarService;
 use App\Services\Manage\ManagerGroupService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ManagerGroupController extends Controller
 {
@@ -41,7 +42,7 @@ class ManagerGroupController extends Controller
     {
         $all_sidebar = $this->sidebar->tree($this->sidebar->all());
 
-        $all_group = $this->manager_group->get();
+        $all_group = $this->manager_group->getChildrenGroup(Auth::guard('manager')->user()['group']);
 
         return view('manage.managergroup.add_or_update', [
             'all_sidebar' => $all_sidebar,

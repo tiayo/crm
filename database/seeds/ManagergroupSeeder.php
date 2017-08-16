@@ -15,12 +15,13 @@ class ManagergroupSeeder extends Seeder
         App\Model\Managergroup::truncate();
 
         factory(App\Model\Managergroup::class)->create([
-            'name' => '超级管理员',
+            'name' => '系统管理员',
             'rule' => serialize(0),
         ]);
 
         factory(App\Model\Managergroup::class)->create([
-            'name' => '系统管理员',
+            'parent_id' => App\Model\Managergroup::first()['managergroup_id'],
+            'name' => '插件管理员',
             'rule' => serialize(0),
         ]);
     }
