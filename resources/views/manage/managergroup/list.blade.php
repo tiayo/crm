@@ -40,6 +40,7 @@
                                     <tbody role="alert" aria-live="polite" aria-relevant="all">
                                     <tr class="odd">
                                         <th class="  sorting_1">ID</th>
+                                        <th>父级分组</th>
                                         <th class=" ">分组名</th>
                                         <th class=" ">分组规则</th>
                                         <th class="center ">更新时间</th>
@@ -49,12 +50,13 @@
                                     @foreach($all_group as $group)
                                     <tr class="even">
                                         <td>{{ $group['managergroup_id'] }}</td>
+                                        <td>{{ $group['parent_id'] }}</td>
                                         <td>{{ $group['name'] }}</td>
                                         <td>{{ json_encode(unserialize($group['rule'])) }}</td>
                                         <td>{{ $group['updated_at'] }}</td>
                                         <td>
                                             <button class="btn btn-info" type="button" onclick="location='{{ route('managergroup_update', ['id' => $group['managergroup_id'] ]) }}'">编辑</button>
-                                            删除
+                                            <button class="btn btn-info" type="button" onclick="location=''">删除</button>
                                         </td>
                                     </tr>
                                     @endforeach

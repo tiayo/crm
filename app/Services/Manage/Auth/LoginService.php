@@ -22,7 +22,7 @@ class LoginService extends Controller
             'password' => $password,
         ];
 
-        if(!Auth::guard('manage')->attempt($credentials)){
+        if(!Auth::guard('manager')->attempt($credentials)){
             return false;
         }
 
@@ -31,6 +31,6 @@ class LoginService extends Controller
 
     public function logout()
     {
-        return Auth::guard('manage')->logout();
+        return Auth::guard('manager')->logout();
     }
 }

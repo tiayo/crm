@@ -37,7 +37,9 @@ Route::group(['namespace' => 'Manage', 'prefix' => 'manage'], function () {
         // ---------------------------操作管理员管理--------------------------- //
         Route::get('/manager/list', 'ManagerController@listView')->name('manager_list');
         Route::get('/manager/add', 'ManagerController@addView')->name('manager_add');
-        Route::post('/manager/add', 'ManagerController@addPost');
+        Route::post('/manager/add', 'ManagerController@post');
+        Route::get('/manager/update/{id}', 'ManagerController@updateView')->name('manager_update');
+        Route::post('/manager/update/{id}', 'ManagerController@post');
 
         // ---------------------------操作管理员管理 分组管理--------------------------- //
         Route::get('/managergroup/list', 'ManagerGroupController@listView')->name('managergroup_list');

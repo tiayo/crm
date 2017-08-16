@@ -44,9 +44,9 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
-        'manage' => [
+        'manager' => [
             'driver' => 'session',
-            'provider' => 'manages',
+            'provider' => 'managers',
         ],
         'api' => [
             'driver' => 'token',
@@ -80,9 +80,9 @@ return [
             'driver' => 'eloquent',//eloquent or database
             'model' => App\Model\Admin::class,
         ],
-        'manages' => [
+        'managers' => [
             'driver' => 'eloquent',//eloquent or database
-            'model' => App\Model\Manage::class,
+            'model' => App\Model\Manager::class,
         ],
 
         // 'users' => [

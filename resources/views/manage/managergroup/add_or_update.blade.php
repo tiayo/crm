@@ -39,6 +39,16 @@
                                 <input type="text" class="form-control" id="name" name="name" value="{{ $old_input['name'] }}" placeholder="分组名">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="parent_id" class="col-lg-3 col-sm-3 control-label">上级分组</label>
+                            <div class="col-lg-3">
+                                <select class="form-control m-bot15" name="parent_id" id="parent_id">
+                                    @foreach($all_group as $group)
+                                        <option value="{{ $group['managergroup_id'] }}">{{ $group['name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                         @foreach($all_sidebar as $key => $sidebar)
                             <div class="form-group">
                                 <label for="my_multi_select{{ $key + 1 }}" class="control-label col-md-3">{{ $sidebar['name'] }}</label>

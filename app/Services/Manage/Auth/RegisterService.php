@@ -28,6 +28,6 @@ class RegisterService extends Controller
         $manage = $this->manage->create($manage);
 
         //自动登录
-        return Auth::guard('manage')->login($manage);
+        return Auth::guard('manager')->login($manage);
     }
 }

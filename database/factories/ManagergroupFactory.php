@@ -15,6 +15,7 @@
 $factory->define(App\Model\Managergroup::class, function (Faker\Generator $faker) {
 
     return [
+        'parent_id' => 0,
         'name' => $faker->unique()->name,
         'rule' => $faker->unique()->safeEmail,
     ];

@@ -25,8 +25,9 @@
 		            <thead>
 		                <tr>
 		                    <th>ID</th>
-		                    <th>名称</th>
+		                    <th>帐号</th>
 		                    <th>邮箱</th>
+                            <th>用户组</th>
 							<th>操作</th>
 		                </tr>
 		            </thead>
@@ -34,10 +35,16 @@
 		            <tbody id="target">
                         @foreach($managers as $manager)
                         <tr>
-                            <th>{{$manager['id']}}</th>
-                            <th>{{$manager['name']}}</th>
-                            <th>{{$manager['email']}}</th>
-                            <th>操作</th>
+                            <td>{{ $manager['id'] }}</td>
+                            <td>{{ $manager['name'] }}</td>
+                            <td>{{ $manager['email'] }}</td>
+                            <td>{{ $manager['group_name'] }}</td>
+                            <td>
+                                <button class="btn btn-info" type="button" onclick="location='{{ route('manager_update', ['id' => $manager['id'] ]) }}'">编辑</button>
+                                @if (Auth::guard('manager')->user()['name'] !== $manager['name'])
+                                    <button class="btn btn-info" type="button" onclick="location=''">删除</button>
+                                @endif
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

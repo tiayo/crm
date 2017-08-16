@@ -11,6 +11,7 @@ class Managergroup extends Model
     protected $fillable = [
         'name',
         'rule',
+        'parent_id',
     ];
 
     protected $primaryKey = 'managergroup_id';

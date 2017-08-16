@@ -21,70 +21,43 @@
 
         <section class="panel">
             <header class="panel-heading">
-                添加菜单
+                添加/更新管理员
             </header>
             <div class="panel-body">
                 <form id="form" class="form-horizontal adminex-form" method="post" action="{{ $url }}">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">*菜单名称</label>
+                        <label for="name" class="col-sm-2 col-sm-2 control-label">管理员帐号</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" placeholder="" name="name" value="{{ $old_input['name'] }}" required>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ $old_input['name'] }}" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">*路由别名</label>
+                        <label for="email" class="col-sm-2 col-sm-2 control-label">管理员邮箱</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" name="" id="route" value="{{ $old_input['route'] }}">
+                            <input type="email" class="form-control" id="email" name="email" value="{{ $old_input['email'] or null}}">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">*显示顺序</label>
+                        <label for="password" class="col-sm-2 col-sm-2 control-label">管理员密码</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" name="position" value="{{ $old_input['position'] or 0}}" required>
+                            <input type="password" class="form-control" id="password" name="password" value="{{ $old_input['password'] or null}}" placeholder="不更改请放空" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label col-lg-2">父级菜单</label>
+                        <label for="group" class="col-sm-2 control-label col-lg-2">分组</label>
                         <div class="col-lg-3">
-                            <select class="form-control m-bot15" name="parent" id="parent_select">
-                                @if (isset($old_input['parent']))
-                                    <option value="{{ $old_input['parent'] }}">保持不变</option>
+                            <select class="form-control m-bot15" name="group" id="group">
+                                @if (isset($old_input['group']))
+                                    <option value="{{ $old_input['group'] }}">保持不变</option>
                                 @endif
-                                <option value="0">顶级菜单</option>
 
-                                @foreach($all_sidebar as $sidebar)
-                                        <option value="{{ $sidebar['sidebar_id'] }}">{{ $sidebar['name'] }}</option>
+                                @foreach($all_group as $group)
+                                        <option value="{{ $group['managergroup_id'] }}">{{ $group['name'] }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 col-sm-2 col-sm-2 control-label">*菜单显示</label>
-                            <div class="col-sm-10 controls">
-                                <label class="pull-left" style="margin-right: 1em">
-                                <span class="checked">
-                                    <div class="radio">
-                                        <span class="checked">
-                                            <input type="radio" value="1" name="index" @if(!isset($old_input['index']) || $old_input['index'] == 1) checked @endif>
-                                            显示
-                                        </span>
-                                    </div>
-                                </span>
-                                </label>
-                                <label class="pull-left">
-                                <span>
-                                    <div class="radio">
-                                        <span class="">
-                                            <input type="radio" value="0" name="index" @if(isset($old_input['index']) && $old_input['index'] == 0) checked @endif>
-                                            不显示
-                                        </span>
-                                    </div>
-                                </span>
-                                </label>
-                            </div>
-                    </div>
-
                     <div class="form-actions">
                         <button class="btn btn-success" type="submit"><i class="fa fa-cloud-upload"></i> 提交创建</button>
                     </div>
@@ -97,27 +70,4 @@
 
 @section('script')
     @parent
-    <script>
-        $(document).ready(function () {
-
-            routeSwitch();
-
-            $('#parent_select').change(function () {
-                routeSwitch();
-            });
-
-        });
-
-        function routeSwitch() {
-            var route = $('#route');
-
-            if ($('#parent_select').val() == 0) {
-                route.attr('name', '');
-                route.removeAttr("required");
-            } else {
-                route.attr('name', 'route');
-                route.attr("required", "true");
-            }
-        }
-    </script>
 @endsection

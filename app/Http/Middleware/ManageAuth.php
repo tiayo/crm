@@ -17,7 +17,7 @@ class ManageAuth
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (!Auth::guard('manage')->check()) {
+        if (!Auth::guard('manager')->check()) {
             return redirect()->route('manage.login');
         }
 
