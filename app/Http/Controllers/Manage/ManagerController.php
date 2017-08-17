@@ -54,6 +54,7 @@ class ManagerController extends Controller
 
     /**
      * 修改管理员视图
+     * 鉴权在控制器中间件进行
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -74,6 +75,7 @@ class ManagerController extends Controller
 
     /**
      * 添加/更新提交
+     * 鉴权在控制器中间件进行
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -94,6 +96,23 @@ class ManagerController extends Controller
             $this->manage->updateOrCreate($this->request->all(), $id);
         }
 
-        return redirect()->route('managergroup_list');
+        return redirect()->route('manager_list');
+    }
+
+    /**
+     * 删除
+     * 鉴权在控制器中间件进行
+     *
+     * @param $id
+     */
+    public function destroy($id)
+    {
+        try {
+            $this->manage->destroy($id);
+        } catch (\Exception $e) {
+            return response('删除失败！');
+        }
+
+        return redirect()->route('manager_list');
     }
 }

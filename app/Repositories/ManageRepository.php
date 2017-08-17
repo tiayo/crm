@@ -73,4 +73,11 @@ class ManageRepository
             ->where('id', $id)
             ->update($post);
     }
+
+    public function destroy($id)
+    {
+        return $this->manage
+            ->where('id', $id)
+            ->delete($id);
+    }
 }

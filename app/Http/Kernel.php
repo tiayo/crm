@@ -7,6 +7,7 @@ use App\Http\Middleware\AdminGuest;
 use App\Http\Middleware\ManageAuth;
 use App\Http\Middleware\ManageGuest;
 use App\Http\Middleware\ManagerControl;
+use App\Http\Middleware\ManagerGroupControl;
 use App\Http\Middleware\UserAuth;
 use App\Http\Middleware\UserGuest;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -70,5 +71,6 @@ class Kernel extends HttpKernel
         'userauth' => UserAuth::class,
         'userguest' => UserGuest::class,
         'managercontrol' => ManagerControl::class,
+        'managercontrolgroup' => ManagerGroupControl::class,
     ];
 }

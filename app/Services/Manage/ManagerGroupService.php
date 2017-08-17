@@ -79,8 +79,37 @@ class ManagerGroupService
         return $this->manager_group->superId();
     }
 
+    /**
+     * 获取所有下级分组
+     * 鉴权在控制器中间件
+     *
+     * @param $parent_id
+     * @param array ...$select
+     * @return array
+     */
     public function getChildrenGroup($parent_id, ...$select)
     {
-        return $this->manager_group->getChildrenGroup($parent_id, ...$select);
+        $all_group = $this->manager_group->getChildrenGroup($parent_id, ...$select);
+
+        //加上自己的分组
+        $me = $this->manager_group->first(Auth::guard('manager')->user()['group']);
+
+        array_unshift($all_group, $me->toArray());
+
+        sort($all_group);
+
+        return $all_group;
+    }
+
+    /**
+     * 删除分组
+     * 鉴权在控制器中间件
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function destroy($id)
+    {
+        return $this->manager_group->destroy($id);
     }
 }

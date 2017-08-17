@@ -3,7 +3,7 @@
 @section('style')
     @parent
     <!--multi-select-->
-    <link rel="stylesheet" type="text/css" href="/static/adminex/js/jquery-multi-select/css/multi-select.css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('/static/adminex/js/jquery-multi-select/css/multi-select.css') }}" />
 @endsection
 
 @section('body')
@@ -43,6 +43,7 @@
                             <label for="parent_id" class="col-lg-3 col-sm-3 control-label">上级分组</label>
                             <div class="col-lg-3">
                                 <select class="form-control m-bot15" name="parent_id" id="parent_id">
+                                    <option value="{{ $old_input['managergroup_id'] }}">{{ $old_input['name']}}</option>
                                     @foreach($all_group as $group)
                                         <option value="{{ $group['managergroup_id'] }}">{{ $group['name'] }}</option>
                                     @endforeach
@@ -56,13 +57,16 @@
                                 <div class="col-md-9">
                                     <select multiple="multiple" class="multi-select" id="my_multi_select{{ $key + 1 }}"
                                             name="rule[]">
-
-                                        @foreach($sidebar['childs'] as $num => $childs)
-                                            <option value="{{ $childs['sidebar_id'] }}"
-                                                @if(!empty($old_input['rule']) && in_array($childs['sidebar_id'], $old_input['rule'])) selected @endif>
-                                                {{ $childs['name'] }}
-                                            </option>
-                                        @endforeach
+                                        @if(isset($sidebar['childs']))
+                                            @foreach($sidebar['childs'] as $num => $childs)
+                                                <option value="{{ $childs['sidebar_id'] }}"
+                                                    @if(!empty($old_input['rule']) && in_array($childs['sidebar_id'], $old_input['rule'])) selected @endif>
+                                                    {{ $childs['name'] }}
+                                                </option>
+                                            @endforeach
+                                            @else
+                                            <option>无权限！</option>
+                                        @endif
                                     </select>
                                 </div>
                             </div>

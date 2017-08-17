@@ -77,4 +77,9 @@ class ManagergroupRepository
     {
         return $this->manager_group->select('managergroup_id')->orderby('managergroup_id')->first()['managergroup_id'];
     }
+
+    public function destroy($id)
+    {
+        return $this->manager_group->delete($id);
+    }
 }
