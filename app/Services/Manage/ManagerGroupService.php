@@ -4,7 +4,6 @@ namespace App\Services\Manage;
 
 use App\Repositories\ManagergroupRepository;
 use Illuminate\Support\Facades\Auth;
-use Mockery\Exception;
 
 class ManagerGroupService
 {
@@ -16,7 +15,7 @@ class ManagerGroupService
     }
 
     /**
-     * 获取所有分组
+     * 获取所有分组.
      *
      * @return mixed
      */
@@ -26,7 +25,9 @@ class ManagerGroupService
     }
 
     /**
-     * 获取排除第一条（第一条默认为超级管理员配置）的所有分组
+     * 获取排除第一条（第一条默认为�
+     * 级管理员�
+     * �置）的所有分组.
      *
      * @return mixed
      */
@@ -36,10 +37,11 @@ class ManagerGroupService
     }
 
     /**
-     * 更新或编辑
+     * 更新或编辑.
      *
      * @param $post
      * @param null $id
+     *
      * @return mixed
      */
     public function updateOrCreate($post, $id = null)
@@ -54,9 +56,10 @@ class ManagerGroupService
     }
 
     /**
-     * 根据id获取单个分组
+     * 根据id获取单个分组.
      *
      * @param $managergrop_id
+     *
      * @return mixed
      */
     public function first($managergrop_id)
@@ -64,13 +67,14 @@ class ManagerGroupService
         $group = $this->manager_group->first($managergrop_id);
 
         $group['rule'] = unserialize($group['rule']);
-        
+
         return $group;
     }
 
     /**
-     * 获取第一条记录作为超级管理员分组
-     * 返回id
+     * 获取第一条记录作为�
+     * 级管理员分组
+     * 返回id.
      *
      * @return mixed
      */
@@ -81,10 +85,11 @@ class ManagerGroupService
 
     /**
      * 获取所有下级分组
-     * 鉴权在控制器中间件
+     * 鉴权在控制器中间件.
      *
      * @param $parent_id
      * @param array ...$select
+     *
      * @return array
      */
     public function getChildrenGroup($parent_id, ...$select)
@@ -103,9 +108,10 @@ class ManagerGroupService
 
     /**
      * 删除分组
-     * 鉴权在控制器中间件
+     * 鉴权在控制器中间件.
      *
      * @param $id
+     *
      * @return mixed
      */
     public function destroy($id)

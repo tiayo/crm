@@ -1,12 +1,13 @@
 <?php
 /**
- * 当前用户是否有权限操作指定管理员中间件
+ * 当前用户是否有权限操作指定管理员中间件.
  */
+
 namespace App\Http\Middleware;
 
 use App\Services\Manage\ManagerGroupService;
-use Closure;
 use App\Services\Manage\ManagerService;
+use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -36,9 +37,10 @@ class ManagerControl
     }
 
     /**
-     * 验证updateView方法
+     * 验证updateView方法.
      *
      * @param $id
+     *
      * @return bool
      */
     public function updateView($id, $group)
@@ -55,10 +57,11 @@ class ManagerControl
     }
 
     /**
-     * 验证post方法
+     * 验证post方法.
      *
      * @param $id
      * @param $group
+     *
      * @return bool
      */
     public function post($id, $group)
@@ -75,10 +78,11 @@ class ManagerControl
     }
 
     /**
-     * 验证destroy方法
+     * 验证destroy方法.
      *
      * @param $id
      * @param $group
+     *
      * @return bool
      */
     public function destroy($id, $group)
@@ -92,11 +96,11 @@ class ManagerControl
         return $this->updateView($id, $group);
     }
 
-
     /**
-     * 验证添加
+     * 验证添加.
      *
      * @param $group
+     *
      * @return bool
      */
     public function group($group)
@@ -114,9 +118,10 @@ class ManagerControl
     }
 
     /**
-     * 获取来访方法名
+     * 获取来访方法名.
      *
      * @param $route_name
+     *
      * @return null|string
      */
     public function handleRouteName($route_name)

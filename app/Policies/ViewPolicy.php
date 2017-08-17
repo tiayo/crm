@@ -13,8 +13,9 @@ class ViewPolicy
     /**
      * Determine whether the user can view the post.
      *
-     * @param  \App\Model\Admin  $admin
-     * @param  \App\Model\Task  $task
+     * @param \App\Model\Admin $admin
+     * @param \App\Model\Task  $task
+     *
      * @return mixed
      */
     public function view(Admin $admin, Task $task)

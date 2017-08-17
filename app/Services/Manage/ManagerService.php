@@ -23,7 +23,7 @@ class ManagerService
 
     /**
      * 获取下级管理员
-     * redis缓存
+     * redis缓存.
      *
      * @return array
      */
@@ -54,7 +54,8 @@ class ManagerService
 
     /**
      * 获取分组
-     * 仅列出低于当前级别的
+     * �
+     * 列出低于当前级别的.
      *
      * @return mixed
      */
@@ -64,9 +65,10 @@ class ManagerService
     }
 
     /**
-     * 查找指定id的用户
+     * 查找指定id的用户.
      *
      * @param $id
+     *
      * @return mixed
      */
     public function first($id)
@@ -75,8 +77,10 @@ class ManagerService
     }
 
     /**
-     * 获取超级管理员id
-     * 默认数据表第一个管理员为超级管理员
+     * 获取�
+     * 级管理员id
+     * 默认数据表第一个管理员为�
+     * 级管理员.
      *
      * @return mixed
      */
@@ -88,10 +92,12 @@ class ManagerService
     /**
      * 更新或编辑
      * 鉴权在控制器中间件进行
-     * 执行后需要清除redis
+     * 执行后需要�
+     * 除redis.
      *
      * @param $post
      * @param null $id
+     *
      * @return mixed
      */
     public function updateOrCreate($post, $id = null)
@@ -104,7 +110,7 @@ class ManagerService
         //密码
         if (isset($post['password'])) {
             $add['password'] = bcrypt($post['password']);
-        } else if(empty($id) && $id !== 0) {
+        } elseif (empty($id) && $id !== 0) {
             //默认密码
             $add['password'] = bcrypt('Abcd.123');
         }
@@ -119,9 +125,11 @@ class ManagerService
     /**
      * 删除记录
      * 鉴权在控制器中间件进行
-     * 执行后需要清除redis
+     * 执行后需要�
+     * 除redis.
      *
      * @param $id
+     *
      * @return mixed
      */
     public function destroy($id)

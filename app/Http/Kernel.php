@@ -58,19 +58,19 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'adminauth' => AdminAuth::class,
-        'adminguest' => AdminGuest::class,
-        'manageauth' => ManageAuth::class,
-        'manageguest' => ManageGuest::class,
-        'userauth' => UserAuth::class,
-        'userguest' => UserGuest::class,
-        'managercontrol' => ManagerControl::class,
+        'auth'                => \Illuminate\Auth\Middleware\Authenticate::class,
+        'auth.basic'          => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'bindings'            => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'can'                 => \Illuminate\Auth\Middleware\Authorize::class,
+        'guest'               => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'throttle'            => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'adminauth'           => AdminAuth::class,
+        'adminguest'          => AdminGuest::class,
+        'manageauth'          => ManageAuth::class,
+        'manageguest'         => ManageGuest::class,
+        'userauth'            => UserAuth::class,
+        'userguest'           => UserGuest::class,
+        'managercontrol'      => ManagerControl::class,
         'managercontrolgroup' => ManagerGroupControl::class,
     ];
 }

@@ -37,7 +37,6 @@ class ManagergroupRepository
 
         if (is_array($all_group) || is_object($all_group)) {
             foreach ($all_group as $group) {
-
                 if (!isset($group['managergroup_id'])) {
                     continue;
                 }

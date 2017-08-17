@@ -18,11 +18,11 @@ class LoginService extends Controller
     public function login($name, $username, $password)
     {
         $credentials = [
-            $name => $username,
+            $name      => $username,
             'password' => $password,
         ];
 
-        if(!Auth::guard('manager')->attempt($credentials)){
+        if (!Auth::guard('manager')->attempt($credentials)) {
             return false;
         }
 

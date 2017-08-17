@@ -26,6 +26,4 @@ class Task extends Model
     protected $table = 'task';
 
     protected $primaryKey = 'task_id';
-
 }
-

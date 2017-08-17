@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Model\Manager;
-use Illuminate\Support\Facades\Auth;
 
 class ManageRepository
 {

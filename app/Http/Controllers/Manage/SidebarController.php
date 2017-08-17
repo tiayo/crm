@@ -32,9 +32,9 @@ class SidebarController extends Controller
 
         return view('manage.sidebar.add_or_update', [
             'all_sidebar' => $all_sidebar,
-            'old_input' => $this->request->session()->get('_old_input'),
-            'url' => Route('manage_sidebar_add'),
-            'sign' => 'add',
+            'old_input'   => $this->request->session()->get('_old_input'),
+            'url'         => Route('manage_sidebar_add'),
+            'sign'        => 'add',
         ]);
     }
 
@@ -44,19 +44,19 @@ class SidebarController extends Controller
 
         return view('manage.sidebar.add_or_update', [
             'all_sidebar' => $all_sidebar,
-            'old_input' => $this->sidebar->find($id),
-            'url' => Route('manage_sidebar_update', ['id' => $id, 'type' => 'update']),
-            'sign' => 'add',
+            'old_input'   => $this->sidebar->find($id),
+            'url'         => Route('manage_sidebar_update', ['id' => $id, 'type' => 'update']),
+            'sign'        => 'add',
         ]);
     }
 
     public function createOrUpdate($id = null, $type = null)
     {
         $this->validate($this->request, [
-            'name' => 'required',
-            'route' => 'alpha_dash',
-            'parent' => 'required|integer',
-            'index' => 'required|integer|min:0|max:1',
+            'name'     => 'required',
+            'route'    => 'alpha_dash',
+            'parent'   => 'required|integer',
+            'index'    => 'required|integer|min:0|max:1',
             'position' => 'required|integer',
         ]);
 

@@ -29,8 +29,8 @@ class LoginController extends Controller
         //验证
         $this->validate($this->request, [
             $this->username() => 'required|email',
-            'password' => 'required|string',
-            'code' => 'required|string|size:5',
+            'password'        => 'required|string',
+            'code'            => 'required|string|size:5',
         ]);
 
         //错误获取
@@ -45,11 +45,11 @@ class LoginController extends Controller
         //验证码判断及验证帐号密码
         if ($code != $session_code) {
             $errors = ['code' => '验证码错误！'];
-        } else if ($this->login->login($this->username(), $username, $password)) {
+        } elseif ($this->login->login($this->username(), $username, $password)) {
             return redirect()->route('admin');
         }
 
-       return redirect()->route('admin.login')
+        return redirect()->route('admin.login')
            ->withInput($this->request->only($this->username(), 'remember'))
            ->withErrors($errors);
     }

@@ -21,7 +21,7 @@ class ManagerController extends Controller
     }
 
     /**
-     * 管理员列表
+     * 管理员列表.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -35,7 +35,7 @@ class ManagerController extends Controller
     }
 
     /**
-     * 添加管理员视图
+     * 添加管理员视图.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -44,17 +44,17 @@ class ManagerController extends Controller
         $all_group = $this->manage->getGroup();
 
         return view('manage.manager.add_or_update', [
-            'all_group' => $all_group,
-            'old_input' => $this->request->session()->get('_old_input'),
-            'url' => Route('manager_add'),
-            'sign' => 'add',
+            'all_group'         => $all_group,
+            'old_input'         => $this->request->session()->get('_old_input'),
+            'url'               => Route('manager_add'),
+            'sign'              => 'add',
             'parent_breadcrumb' => 'manager_add',
         ]);
     }
 
     /**
      * 修改管理员视图
-     * 鉴权在控制器中间件进行
+     * 鉴权在控制器中间件进行.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -65,26 +65,26 @@ class ManagerController extends Controller
         $old_input = $this->request->session()->has('_old_input') ? session('_old_input') : $this->manage->first($id);
 
         return view('manage.manager.add_or_update', [
-            'all_group' => $all_group,
-            'old_input' => $old_input,
-            'url' => Route('manager_update', ['id' => $id]),
-            'sign' => 'update',
+            'all_group'         => $all_group,
+            'old_input'         => $old_input,
+            'url'               => Route('manager_update', ['id' => $id]),
+            'sign'              => 'update',
             'parent_breadcrumb' => 'manager_list',
         ]);
     }
 
     /**
      * 添加/更新提交
-     * 鉴权在控制器中间件进行
+     * 鉴权在控制器中间件进行.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function post($id = null)
     {
         $this->validate($this->request, [
-            'name' => 'required',
-            'email' => 'required',
-            'group' => 'required|integer',
+            'name'     => 'required',
+            'email'    => 'required',
+            'group'    => 'required|integer',
             'password' => 'min:6',
         ]);
 
@@ -101,7 +101,7 @@ class ManagerController extends Controller
 
     /**
      * 删除
-     * 鉴权在控制器中间件进行
+     * 鉴权在控制器中间件进行.
      *
      * @param $id
      */

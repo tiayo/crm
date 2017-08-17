@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 前端路由表
+ * 前端路由表.
  *
  * 这里设置前端页面的主要路由
  */
@@ -25,7 +25,7 @@ Route::group(['namespace' => 'Home'], function () {
 
     //第二层（设置登录中间件）
     Route::group(['middleware' => 'auth'], function () {
-        Route::get('/', function (){
+        Route::get('/', function () {
             echo '前台用户id：'.Auth::id();
         })->name('home');
     });

@@ -19,7 +19,7 @@ class SidebarService
     }
 
     /**
-     * 获取指定的菜单
+     * 获取指定的菜单.
      *
      * @param array $sidebars
      *
@@ -41,7 +41,6 @@ class SidebarService
     public function addParent($lists)
     {
         foreach ($lists as $list) {
-
             if ($list['parent'] == 0) {
                 $list['parent_t'] = '顶级栏目';
             } else {
@@ -55,9 +54,10 @@ class SidebarService
     }
 
     /**
-     * 创建目录树
+     * 创建目录树.
      *
      * @param $items
+     *
      * @return mixed
      */
     public function tree($items)
@@ -80,29 +80,30 @@ class SidebarService
     }
 
     /**
-     * 根据position反向排序
+     * 根据position反向排序.
      *
      * @param $array
+     *
      * @return mixed
      */
     public function sort($array)
     {
-        array_multisort(array_column($array,'position'), SORT_DESC, $array);
+        array_multisort(array_column($array, 'position'), SORT_DESC, $array);
 
         return $array;
     }
 
-
     /**
-     * 处理侧边栏显示顺序
+     * 处理侧边栏显示顺序.
      *
      * @param $tree
+     *
      * @return array
      */
     public function printArray($tree)
     {
         foreach ($tree as $t) {
-            $t['childs'] = isset($t['childs']) ? $t['childs'] : null;//No report index does not exist
+            $t['childs'] = isset($t['childs']) ? $t['childs'] : null; //No report index does not exist
 
             //子级栏目
             if ($t['parent'] != 0 && $t['childs'] == '') {
@@ -136,12 +137,12 @@ class SidebarService
      *
      * @param $array
      * @param $prefix
+     *
      * @return array|string
      */
     public function addPrefix($array, $prefix)
     {
         foreach ($array as $key => $value) {
-
             $value['name'] = $prefix.$value['name'];
             $result[$key] = $value;
 
@@ -153,7 +154,7 @@ class SidebarService
         return $result;
     }
 
-    public function createOrCreate($post, $id = null , $type = null)
+    public function createOrCreate($post, $id = null, $type = null)
     {
         $map['name'] = $post['name'];
         $map['route'] = !isset($post['route']) ? null : $post['route'];
@@ -164,6 +165,7 @@ class SidebarService
         if (!empty($id) && $type == 'update') {
             return $this->sidebar->update($id, $map);
         }
+
         return $this->sidebar->create($map);
     }
 
@@ -171,7 +173,7 @@ class SidebarService
     {
         $result[] = $current = $this->sidebar->findWhereRoute($route);
 
-        $result[] = $parent =  $this->sidebar->find($current['parent']);
+        $result[] = $parent = $this->sidebar->find($current['parent']);
 
         while ($parent['parent'] != 0) {
             $parent = $this->sidebar->find($parent['parent']);

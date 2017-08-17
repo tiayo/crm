@@ -16,4 +16,3 @@ class Managergroup extends Model
 
     protected $primaryKey = 'managergroup_id';
 }
-
