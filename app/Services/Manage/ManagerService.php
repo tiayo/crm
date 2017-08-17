@@ -87,6 +87,8 @@ class ManagerService
 
     /**
      * 更新或编辑
+     * 鉴权在控制器中间件进行
+     * 执行后需要清除redis
      *
      * @param $post
      * @param null $id
@@ -95,11 +97,8 @@ class ManagerService
     public function updateOrCreate($post, $id = null)
     {
         $add['name'] = $post['name'];
-
         $add['email'] = $post['email'];
-
         $add['group'] = $post['group'];
-
         $add['type'] = 2;
 
         //密码
@@ -115,5 +114,24 @@ class ManagerService
 
         //删除redis缓存
         return $this->redis->redisMultiDelete('manageChildren');
+    }
+
+    /**
+     * 删除记录
+     * 鉴权在控制器中间件进行
+     * 执行后需要清除redis
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function destroy($id)
+    {
+        //执行
+        if ($this->manage->destroy($id)) {
+            //删除redis缓存
+            return $this->redis->redisMultiDelete('manageChildren');
+        }
+
+        return false;
     }
 }

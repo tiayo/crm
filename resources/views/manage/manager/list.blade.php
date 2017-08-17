@@ -42,7 +42,7 @@
                             <td>
                                 <button class="btn btn-info" type="button" onclick="location='{{ route('manager_update', ['id' => $manager['id'] ]) }}'">编辑</button>
                                 @if (Auth::guard('manager')->user()['name'] !== $manager['name'])
-                                    <button class="btn btn-info" type="button" onclick="location=''">删除</button>
+                                    <button class="btn btn-info" type="button" onclick="javascript:if(confirm('操作不可恢复，确实要删除吗?'))location='{{ route('manager_destroy', ['id' => $manager['id'] ]) }}'">删除</button>
                                 @endif
                             </td>
                         </tr>

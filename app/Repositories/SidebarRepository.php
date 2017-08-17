@@ -65,4 +65,18 @@ class SidebarRepository
             ->where('sidebar_id', $id)
             ->delete();
     }
+
+    public function get($sidebars)
+    {
+        return $this->sidebar
+            ->whereIn('sidebar_id', $sidebars)
+            ->get();
+    }
+
+    public function findParent()
+    {
+        return $this->sidebar
+            ->where('parent', 0)
+            ->get();
+    }
 }

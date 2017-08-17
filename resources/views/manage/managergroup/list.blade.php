@@ -55,8 +55,12 @@
                                         <td>{{ json_encode(unserialize($group['rule'])) }}</td>
                                         <td>{{ $group['updated_at'] }}</td>
                                         <td>
+                                            @if (Auth::guard('manager')->user()['group'] != $group['managergroup_id'])
                                             <button class="btn btn-info" type="button" onclick="location='{{ route('managergroup_update', ['id' => $group['managergroup_id'] ]) }}'">编辑</button>
-                                            <button class="btn btn-info" type="button" onclick="location=''">删除</button>
+                                            <button class="btn btn-info" type="button" onclick="javascript:if(confirm('操作不可恢复，确实要删除吗?'))location='{{ route('managergroup_destroy', ['id' => $group['managergroup_id'] ]) }}'">删除</button>
+                                            @else
+                                                无操作权限
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach

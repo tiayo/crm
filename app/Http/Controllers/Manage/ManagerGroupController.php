@@ -16,6 +16,9 @@ class ManagerGroupController extends Controller
 
     public function __construct(ManagerGroupService $manager_group, Request $request, SidebarService $sidebar)
     {
+        //更新、添加、删除操作时经过此中间件鉴权
+        $this->middleware('managercontrolgroup')->except(['listView', 'addView']);
+
         $this->manager_group = $manager_group;
         $this->request = $request;
         $this->sidebar = $sidebar;
@@ -28,8 +31,10 @@ class ManagerGroupController extends Controller
      */
     public function listView()
     {
+        $group = Auth::guard('manager')->user()->group;
+
         return view('manage.managergroup.list', [
-            'all_group' => $this->manager_group->get(),
+            'all_group' => $this->manager_group->getChildrenGroup($group, '*'),
         ]);
     }
 
@@ -40,9 +45,13 @@ class ManagerGroupController extends Controller
      */
     public function addView()
     {
-        $all_sidebar = $this->sidebar->tree($this->sidebar->all());
+        $group = Auth::guard('manager')->user()->group;
 
-        $all_group = $this->manager_group->getChildrenGroup(Auth::guard('manager')->user()['group']);
+        $sidebar_id = $this->manager_group->first($group)['rule'];
+
+        $all_sidebar = $this->sidebar->tree($this->sidebar->get($sidebar_id));
+
+        $all_group = $this->manager_group->getChildrenGroup($group, '*');
 
         return view('manage.managergroup.add_or_update', [
             'all_sidebar' => $all_sidebar,
@@ -56,15 +65,20 @@ class ManagerGroupController extends Controller
 
     /**
      * 更新视图
+     * 鉴权在控制器中间件
      *
      * @param $id [分组id]
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function updateView($id)
     {
-        $all_sidebar = $this->sidebar->tree($this->sidebar->all());
+        $group = Auth::guard('manager')->user()->group;
 
-        $all_group = $this->manager_group->get();
+        $sidebar_id = $this->manager_group->first($group)['rule'];
+
+        $all_sidebar = $this->sidebar->tree($this->sidebar->get($sidebar_id));
+
+        $all_group = $this->manager_group->getChildrenGroup($group, '*');
 
         $old_input = $this->request->session()->has('_old_input') ? session('_old_input') : $this->manager_group->first($id);
 
@@ -80,6 +94,7 @@ class ManagerGroupController extends Controller
 
     /**
      * 添加/更新提交
+     * 鉴权在控制器中间件
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -102,5 +117,20 @@ class ManagerGroupController extends Controller
         return redirect()->route('managergroup_list');
     }
 
+    /**
+     * 删除
+     * 鉴权在控制器中间件进行
+     *
+     * @param $id
+     */
+    public function destroy($id)
+    {
+        try {
+            $this->manager_group->destroy($id);
+        } catch (\Exception $e) {
+            return response('删除失败！');
+        }
 
+        return redirect()->route('managergroup_list');
+    }
 }

@@ -9,6 +9,7 @@ use Closure;
 use App\Services\Manage\ManagerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class ManagerControl
 {
@@ -23,29 +24,24 @@ class ManagerControl
 
     public function handle(Request $request, Closure $next)
     {
-        //获取操作的id
-        $id = $request->route('id');
-        $group = $request->get('group');
+        //获取当前路由名称
+        $currentRouteName = $this->handleRouteName(Route::currentRouteAction());
 
-        //如果id未获取，则为添加，验证分组是否允许
-        if (empty($id) && !empty($group)) {
-            if ($this->create($group)) return $next($request);
-        }
-        //id不为空，则为更新，验证是否有权限
-        else if(!empty($id)){
-            if ($this->update($id)) return $next($request);
+        //判断验证结果
+        if (method_exists($this, $currentRouteName) && $this->$currentRouteName($request->route('id'), $request->get('group'))) {
+            return $next($request);
         }
 
         return response('您没有权限！', 403);
     }
 
     /**
-     * 验证更新
+     * 验证updateView方法
      *
      * @param $id
      * @return bool
      */
-    public function update($id)
+    public function updateView($id, $group)
     {
         $manager_children = $this->manager->getChildren();
 
@@ -59,12 +55,51 @@ class ManagerControl
     }
 
     /**
+     * 验证post方法
+     *
+     * @param $id
+     * @param $group
+     * @return bool
+     */
+    public function post($id, $group)
+    {
+        if (empty($id)) {
+            return $this->group($group);
+        }
+
+        if ($this->updateView($id, $group)) {
+            return $this->group($group);
+        }
+
+        return false;
+    }
+
+    /**
+     * 验证destroy方法
+     *
+     * @param $id
+     * @param $group
+     * @return bool
+     */
+    public function destroy($id, $group)
+    {
+        //不能删除自己
+        if ($id == Auth::guard('manager_id')->id()) {
+            return false;
+        }
+
+        //验证其他
+        return $this->updateView($id, $group);
+    }
+
+
+    /**
      * 验证添加
      *
      * @param $group
      * @return bool
      */
-    public function create($group)
+    public function group($group)
     {
         $manager_children_group = $this->manager_group
             ->getChildrenGroup(Auth::guard('manager')->user()['group'], 'managergroup_id');
@@ -76,5 +111,18 @@ class ManagerControl
         }
 
         return false;
+    }
+
+    /**
+     * 获取来访方法名
+     *
+     * @param $route_name
+     * @return null|string
+     */
+    public function handleRouteName($route_name)
+    {
+        $array = explode('@', $route_name);
+
+        return end($array);
     }
 }

@@ -40,6 +40,7 @@ Route::group(['namespace' => 'Manage', 'prefix' => 'manage'], function () {
         Route::post('/manager/add', 'ManagerController@post');
         Route::get('/manager/update/{id}', 'ManagerController@updateView')->name('manager_update');
         Route::post('/manager/update/{id}', 'ManagerController@post');
+        Route::get('/manager/destroy/{id}', 'ManagerController@destroy')->name('manager_destroy');
 
         // ---------------------------操作管理员管理 分组管理--------------------------- //
         Route::get('/managergroup/list', 'ManagerGroupController@listView')->name('managergroup_list');
@@ -47,6 +48,7 @@ Route::group(['namespace' => 'Manage', 'prefix' => 'manage'], function () {
         Route::post('/managergroup/add', 'ManagerGroupController@post');
         Route::get('/managergroup/update/{id}', 'ManagerGroupController@updateView')->name('managergroup_update');
         Route::post('/managergroup/update/{id}', 'ManagerGroupController@post');
+        Route::get('/managergroup/destroy/{id}', 'ManagerGroupController@destroy')->name('managergroup_destroy');
 
         // ---------------------------操作插件管理--------------------------- //
         //第三层（设置前缀）

@@ -18,6 +18,21 @@ class SidebarService
         return $lists = $this->sidebar->all()->toArray();
     }
 
+    /**
+     * 获取指定的菜单
+     *
+     * @param array $sidebars
+     *
+     * @return array
+     */
+    public function get($sidebars)
+    {
+        //添加所有父极菜单
+        $all_parent = $this->sidebar->findParent()->toArray();
+
+        return array_merge($all_parent, $this->sidebar->get($sidebars)->toArray());
+    }
+
     public function allOutIndex()
     {
         return $lists = $this->sidebar->getIndex(1)->toArray();
