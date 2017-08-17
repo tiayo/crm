@@ -21,7 +21,7 @@ class PluginController extends Controller
     }
 
     /**
-     * 显示后台插件
+     * 显示后台插件.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -33,7 +33,7 @@ class PluginController extends Controller
     }
 
     /**
-     * 显示前台插件
+     * 显示前台插件.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -45,7 +45,7 @@ class PluginController extends Controller
     }
 
     /**
-     * 添加插件视图
+     * 添加插件视图.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -53,14 +53,13 @@ class PluginController extends Controller
     {
         return view('manage.plugins.plugins_add_or_update', [
             'old_input' => $this->request->session()->get('_old_input'),
-            'url' => Route('plugins_add'),
-            'sign' => 'add',
+            'url'       => Route('plugins_add'),
+            'sign'      => 'add',
         ]);
     }
 
     /**
-     * 添加插件
-     *
+     * 添加插件.
      */
     public function addPost()
     {
@@ -70,13 +69,13 @@ class PluginController extends Controller
         ];
 
         $this->validate($this->request, [
-            'type' => 'required|between:1,2',
-            'name' => 'required',
-            'alias' => 'required|alpha',
-            'version' => 'required|max:10',
-            'author' => 'required',
+            'type'        => 'required|between:1,2',
+            'name'        => 'required',
+            'alias'       => 'required|alpha',
+            'version'     => 'required|max:10',
+            'author'      => 'required',
             'description' => 'required',
-            'status' => 'required|between:0,1',
+            'status'      => 'required|between:0,1',
         ], $messages);
 
         try {
@@ -91,13 +90,13 @@ class PluginController extends Controller
     }
 
     /**
-     * 生成插件服务注册列表
+     * 生成插件服务注册列表.
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function generate()
     {
-        try{
+        try {
             $this->plugins->generate();
         } catch (\Exception $e) {
             return response($e->getMessage());
@@ -107,14 +106,16 @@ class PluginController extends Controller
     }
 
     /**
-     * 安装插件
+     * 安�
+     * 插件.
      *
      * @param $plugin_id
+     *
      * @return $this|\Illuminate\Http\RedirectResponse
      */
     public function install($plugin_id)
     {
-        try{
+        try {
             $this->plugins->install($plugin_id);
         } catch (\Exception $e) {
             redirect()->back()
@@ -125,14 +126,15 @@ class PluginController extends Controller
     }
 
     /**
-     * 卸载插件
+     * 卸载插件.
      *
      * @param $plugin_id
+     *
      * @return $this|\Illuminate\Http\RedirectResponse
      */
     public function uninstall($plugin_id)
     {
-        try{
+        try {
             $this->plugins->install($plugin_id, 0);
         } catch (\Exception $e) {
             redirect()->back()
@@ -146,40 +148,41 @@ class PluginController extends Controller
      * 切换插件状态
      *
      * @param $plugin_id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function pluginStatus($plugin_id)
     {
-        try{
+        try {
             $this->plugins->pluginSwitch('status', $plugin_id);
         } catch (\Exception $e) {
-
         }
 
         return redirect()->back();
     }
 
     /**
-     * 切换插在是否再首页显示
+     * 切换插在是否再首页显示.
      *
      * @param $plugin_id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function pluginIndex($plugin_id)
     {
-        try{
+        try {
             $this->plugins->pluginSwitch('index', $plugin_id);
         } catch (\Exception $e) {
-
         }
 
         return redirect()->back();
     }
 
     /**
-     * 更新插件信息视图
+     * 更新插件信息视图.
      *
      * @param $plugin_id
+     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|\Symfony\Component\HttpFoundation\Response
      */
     public function updateView($plugin_id)
@@ -193,17 +196,18 @@ class PluginController extends Controller
         }
 
         return view('manage.plugins.plugins_add_or_update', [
-            'old_input' =>  $info,
-            'url' => Route('plugins_update', ['plugin_id' => $plugin_id]),
-            'sign' => 'update',
+            'old_input'         => $info,
+            'url'               => Route('plugins_update', ['plugin_id' => $plugin_id]),
+            'sign'              => 'update',
             'parent_breadcrumb' => $info['type'] == 1 ? 'user_plugins' : 'manage_plugins',
         ]);
     }
 
     /**
-     * 更新插件信息
+     * 更新插件信息.
      *
      * @param $plugin_id
+     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function updatePost($plugin_id)
@@ -213,9 +217,9 @@ class PluginController extends Controller
         ];
 
         $this->validate($this->request, [
-            'name' => 'required',
-            'version' => 'required|max:10',
-            'author' => 'required',
+            'name'        => 'required',
+            'version'     => 'required|max:10',
+            'author'      => 'required',
             'description' => 'required',
         ], $messages);
 
@@ -230,14 +234,14 @@ class PluginController extends Controller
         $route = $this->plugins->redirctPlugins($plugin_id);
 
         return redirect()->route($route);
-
     }
 
     /**
-     * 删除插件
+     * 删除插件.
      *
      * @param $plugin_id
      * @param $type
+     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function delete($plugin_id, $type)

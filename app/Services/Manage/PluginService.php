@@ -16,7 +16,7 @@ class PluginService
     }
 
     /**
-     * 生成插件服务类
+     * 生成插件服务类.
      *
      * @return bool
      */
@@ -57,11 +57,13 @@ class PluginService
     }
 
     /**
-     * 添加插件
+     * 添加插件.
      *
      * @param $post
-     * @return bool
+     *
      * @throws \Exception
+     *
+     * @return bool
      */
     public function add($post)
     {
@@ -91,12 +93,15 @@ class PluginService
     }
 
     /**
-     * 安装插件
+     * 安�
+     * 插件.
      *
      * @param $plugin_id
      * @param int $option
-     * @return bool
+     *
      * @throws \Exception
+     *
+     * @return bool
      */
     public function install($plugin_id, $option = 1)
     {
@@ -112,8 +117,7 @@ class PluginService
         }
 
         //未获取到插件抛错
-        if (!isset($type) || empty($type))
-        {
+        if (!isset($type) || empty($type)) {
             throw new \Exception('插件类型异常！');
         }
 
@@ -125,10 +129,9 @@ class PluginService
         }
 
         //引入migration文件
-        try{
+        try {
             app($type.'_'.$name.'_migration')->$option();
         } catch (\Exception $e) {
-
         }
 
         //执行状态更新
@@ -139,9 +142,10 @@ class PluginService
     }
 
     /**
-     * 通过插件类型获取插件
+     * 通过插件类型获取插件.
      *
      * @param $type
+     *
      * @return mixed
      */
     public function lists($type)
@@ -153,6 +157,7 @@ class PluginService
      * 更改插件状态
      *
      * @param $plugin_id
+     *
      * @return bool
      */
     public function pluginSwitch($type, $plugin_id, $switch = [0, 1])
@@ -183,10 +188,11 @@ class PluginService
 
     /**
      * 更新插件信息
-     * 插件别名、类型无法修改
+     * 插件别名、类型无法修改.
      *
      * @param $plugin_id
      * @param $post
+     *
      * @return mixed
      */
     public function update($plugin_id, $post)
@@ -197,17 +203,18 @@ class PluginService
         $map['description'] = $post['description'];
         $map['status'] = isset($post['status']) ? $post['status'] : 0;
 
-
         return $this->plugin->update($plugin_id, $map);
     }
 
     /**
-     * 删除插件（两种类型）
+     * 删除插件（两种类型）.
      *
      * @param $plugin_id
      * @param $type
-     * @return bool
+     *
      * @throws \Exception
+     *
+     * @return bool
      */
     public function delete($plugin_id, $type)
     {
@@ -234,16 +241,15 @@ class PluginService
         $alias = $info['alias'];
 
         //删除数据库（如果有）
-        try{
+        try {
             app(strtolower($type).'_'.strtolower($alias).'_migration')->down();
         } catch (\Exception $e) {
-
         }
 
         //开始删除文件
         if ($info['type'] == 1) {
             $type = config('plugin.user_path');
-        } else if($info['type'] == 2) {
+        } elseif ($info['type'] == 2) {
             $type = config('plugin.manage_path');
         }
 
@@ -255,10 +261,11 @@ class PluginService
     }
 
     /**
-     * 跳转到对应的插件列表
+     * 跳转到对应的插件列表.
      *
      * @param $plugin_id
      * @param null $post
+     *
      * @return string
      */
     public function redirctPlugins($plugin_id, $post = null)

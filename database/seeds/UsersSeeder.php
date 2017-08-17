@@ -15,14 +15,14 @@ class UsersSeeder extends Seeder
         App\Model\User::truncate();
 
         factory(App\Model\User::class)->create([
-            'name' => 'user',
-            'email' => '656861622@qq.com',
+            'name'     => 'user',
+            'email'    => '656861622@qq.com',
             'password' => bcrypt('654321'),
         ]);
 
         factory(App\Model\User::class)->create([
-            'name' => 'tiayo',
-            'email' => '474993693@qq.com',
+            'name'     => 'tiayo',
+            'email'    => '474993693@qq.com',
             'password' => bcrypt('654321'),
         ]);
     }

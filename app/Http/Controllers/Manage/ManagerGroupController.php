@@ -25,7 +25,7 @@ class ManagerGroupController extends Controller
     }
 
     /**
-     * 列表
+     * 列表.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -39,7 +39,7 @@ class ManagerGroupController extends Controller
     }
 
     /**
-     * 添加视图
+     * 添加视图.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -54,20 +54,21 @@ class ManagerGroupController extends Controller
         $all_group = $this->manager_group->getChildrenGroup($group, '*');
 
         return view('manage.managergroup.add_or_update', [
-            'all_sidebar' => $all_sidebar,
-            'all_group' => $all_group,
-            'old_input' => $this->request->session()->get('_old_input'),
-            'url' => Route('managergroup_add'),
-            'sign' => 'add',
+            'all_sidebar'       => $all_sidebar,
+            'all_group'         => $all_group,
+            'old_input'         => $this->request->session()->get('_old_input'),
+            'url'               => Route('managergroup_add'),
+            'sign'              => 'add',
             'parent_breadcrumb' => 'managergroup_list',
         ]);
     }
 
     /**
      * 更新视图
-     * 鉴权在控制器中间件
+     * 鉴权在控制器中间件.
      *
      * @param $id [分组id]
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function updateView($id)
@@ -83,26 +84,26 @@ class ManagerGroupController extends Controller
         $old_input = $this->request->session()->has('_old_input') ? session('_old_input') : $this->manager_group->first($id);
 
         return view('manage.managergroup.add_or_update', [
-            'all_sidebar' => $all_sidebar,
-            'all_group' => $all_group,
-            'old_input' => $old_input,
-            'url' => Route('managergroup_update', ['id' => $id]),
-            'sign' => 'update',
+            'all_sidebar'       => $all_sidebar,
+            'all_group'         => $all_group,
+            'old_input'         => $old_input,
+            'url'               => Route('managergroup_update', ['id' => $id]),
+            'sign'              => 'update',
             'parent_breadcrumb' => 'managergroup_list',
         ]);
     }
 
     /**
      * 添加/更新提交
-     * 鉴权在控制器中间件
+     * 鉴权在控制器中间件.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function post($id = null)
     {
         $this->validate($this->request, [
-            'name' => 'required',
-            'rule' => 'required|array',
+            'name'   => 'required',
+            'rule'   => 'required|array',
             'rule.*' => 'required|integer',
         ]);
 
@@ -119,7 +120,7 @@ class ManagerGroupController extends Controller
 
     /**
      * 删除
-     * 鉴权在控制器中间件进行
+     * 鉴权在控制器中间件进行.
      *
      * @param $id
      */

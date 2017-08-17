@@ -15,7 +15,7 @@ class Plugin extends Model
         'author',
         'version',
         'status',
-        'description'
+        'description',
 
     ];
 

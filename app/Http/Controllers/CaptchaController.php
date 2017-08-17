@@ -17,9 +17,10 @@ class CaptchaController extends Controller
     }
 
     /**
-     * 生成并保存验证码到session
+     * 生成并保存验证码到session.
      *
      * @param $group //验证码保存分组(防止串页面)
+     *
      * @return string
      */
     public function captcha($group)
@@ -35,9 +36,10 @@ class CaptchaController extends Controller
     }
 
     /**
-     * 验证验证码方法（当确认用户当前状态只会在一个页面下产生验证码时使用）
+     * 验证验证码方法（当确认用户当前状态只会在一个页面下产生验证码时使用）.
      *
      * @param $code
+     *
      * @return bool
      */
     public function verify($code)

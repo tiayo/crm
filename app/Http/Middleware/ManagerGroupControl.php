@@ -1,7 +1,8 @@
 <?php
 /**
- * 当前用户是否有权限操作指定分组中间件
+ * 当前用户是否有权限操作指定分组中间件.
  */
+
 namespace App\Http\Middleware;
 
 use App\Services\Manage\ManagerGroupService;
@@ -39,9 +40,10 @@ class ManagerGroupControl
     }
 
     /**
-     * 验证updateView方法
+     * 验证updateView方法.
      *
      * @param $id
+     *
      * @return bool
      */
     public function updateView()
@@ -59,10 +61,11 @@ class ManagerGroupControl
     }
 
     /**
-     * 验证post方法
+     * 验证post方法.
      *
      * @param $id
      * @param $group
+     *
      * @return bool
      */
     public function post()
@@ -76,6 +79,7 @@ class ManagerGroupControl
             if ($this->manager->group($group)) {
                 return $this->sidebar();
             }
+
             return false;
         }
 
@@ -84,10 +88,11 @@ class ManagerGroupControl
     }
 
     /**
-     * 验证destroy方法
+     * 验证destroy方法.
      *
      * @param $id
      * @param $group
+     *
      * @return bool
      */
     public function destroy()
@@ -106,9 +111,11 @@ class ManagerGroupControl
     }
 
     /**
-     * 验证添加的菜单是否被允许
+     * 验证添加的菜单是否被�
+     * �许.
      *
      * @param $group
+     *
      * @return bool
      */
     public function sidebar()
@@ -118,16 +125,16 @@ class ManagerGroupControl
         $sidebars = $this->manager_group->first(Auth::guard('manager')->user()['group'])['rule'];
 
         foreach ($sidebars as $sidebar) {
-           foreach ($selects as $key => $select) {
-               if ($sidebar == $select) {
-                   unset($selects[$key]);
-               }
-           }
+            foreach ($selects as $key => $select) {
+                if ($sidebar == $select) {
+                    unset($selects[$key]);
+                }
+            }
 
-           //全部被匹配，返回true
-           if (empty($selects)) {
-               return true;
-           }
+            //全部被匹配，返回true
+            if (empty($selects)) {
+                return true;
+            }
         }
 
         return false;

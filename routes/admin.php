@@ -1,14 +1,13 @@
 <?php
 
 /**
- * 后台路由表
+ * 后台路由表.
  *
  * 这里设置后台页面的主要路由
  */
 
 //第一层（设置命令空间和前缀）
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
-
     $this->get('logout', 'Auth\LoginController@logout')->name('admin.logout');
 
     //第二层（设置未登录中间件）
@@ -21,7 +20,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     //第二层（设置登录中间件）
     Route::group(['middleware' => 'adminauth'], function () {
-
         Route::get('/', 'AdminController@index')->name('admin');
     });
 });

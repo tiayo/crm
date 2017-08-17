@@ -15,14 +15,14 @@ class AdminSeeder extends Seeder
         App\Model\Admin::truncate();
 
         factory(App\Model\Admin::class)->create([
-            'name' => 'admin',
-            'email' => '656861622@qq.com',
+            'name'     => 'admin',
+            'email'    => '656861622@qq.com',
             'password' => bcrypt('654321'),
         ]);
 
         factory(App\Model\Admin::class)->create([
-            'name' => 'tiayo',
-            'email' => '474993693@qq.com',
+            'name'     => 'tiayo',
+            'email'    => '474993693@qq.com',
             'password' => bcrypt('654321'),
         ]);
     }

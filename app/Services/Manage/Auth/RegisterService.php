@@ -19,8 +19,8 @@ class RegisterService extends Controller
     {
         //创建数组
         $manage = [
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'name'     => $data['name'],
+            'email'    => $data['email'],
             'password' => bcrypt($data['password']),
             ];
 

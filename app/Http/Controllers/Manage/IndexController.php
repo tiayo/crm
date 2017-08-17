@@ -24,5 +24,4 @@ class IndexController extends Controller
             'lists' => $this->plugins->lists(2),
         ]);
     }
-
 }

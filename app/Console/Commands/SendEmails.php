@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Model\User;
 use Illuminate\Console\Command;
 
 class SendEmails extends Command

@@ -7,12 +7,13 @@ use Illuminate\Support\Facades\Redis;
 class RedisService implements RedisServiceInterface
 {
     /**
-     * 批量添加
+     * 批量添加.
      *
      * @param $prefix
      * @param $value
-     * @param int $expir
+     * @param int  $expir
      * @param null $suffix
+     *
      * @return bool
      */
     public function redisMultiAdd($prefix, $value, $expir = 0, $suffix = null)
@@ -40,11 +41,12 @@ class RedisService implements RedisServiceInterface
     }
 
     /**
-     * 单个添加
+     * 单个添加.
      *
      * @param $keyword
      * @param $value
      * @param int $expir
+     *
      * @return mixed
      */
     public function redisSingleAdd($keyword, $value, $expir = 0)
@@ -61,9 +63,10 @@ class RedisService implements RedisServiceInterface
     }
 
     /**
-     * 批量删除
+     * 批量删除.
      *
      * @param $prefix
+     *
      * @return bool
      */
     public function redisMultiDelete($prefix)
@@ -79,9 +82,10 @@ class RedisService implements RedisServiceInterface
     }
 
     /**
-     * 单个删除
+     * 单个删除.
      *
      * @param $keyword
+     *
      * @return mixed
      */
     public function redisSingleDelete($keyword)
@@ -90,9 +94,10 @@ class RedisService implements RedisServiceInterface
     }
 
     /**
-     * 获取单个
+     * 获取单个.
      *
      * @param $keyword
+     *
      * @return mixed
      */
     public function redisSingleGet($keyword)
@@ -101,9 +106,10 @@ class RedisService implements RedisServiceInterface
     }
 
     /**
-     * 批量获取
+     * 批量获取.
      *
      * @param $prefix
+     *
      * @return array
      */
     public function redisMultiGet($prefix)

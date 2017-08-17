@@ -11,9 +11,11 @@ class IndexController extends Controller
     protected $index;
 
     /**
-     * 这里是依赖注入案例
+     * 这里是依赖注�
+     * �案例.
      *
      * IndexController constructor.
+     *
      * @param IndexService $index
      */
     public function __construct(IndexService $index)

@@ -13,7 +13,7 @@ class CreatePluginService
     protected $small_alias;
 
     /**
-     * 调度方法
+     * 调度方法.
      *
      * @param $post
      */
@@ -23,7 +23,7 @@ class CreatePluginService
         if ($post['type'] == 1) {
             $this->type = config('plugin.user_path');
             $this->small_type = strtolower($this->type);
-        } else if($post['type'] == 2) {
+        } elseif ($post['type'] == 2) {
             $this->type = config('plugin.manage_path');
             $this->small_type = strtolower($this->type);
         }
@@ -42,11 +42,10 @@ class CreatePluginService
         $this->file();
 
         return true;
-
     }
 
     /**
-     * 文件列表
+     * 文件列表.
      */
     public function file()
     {
@@ -77,7 +76,8 @@ class CreatePluginService
     }
 
     /**
-     * 写入文件
+     * 写�
+     * �文件.
      *
      * @param $file
      */
@@ -95,8 +95,7 @@ class CreatePluginService
     }
 
     /**
-     * 文件夹列表
-     *
+     * 文件夹列表.
      */
     public function path()
     {
@@ -114,9 +113,10 @@ class CreatePluginService
     }
 
     /**
-     * 创建文件目录
+     * 创建文件目录.
      *
      * @param $file
+     *
      * @throws \Exception
      */
     public function createFile($file)
@@ -129,29 +129,32 @@ class CreatePluginService
     }
 
     /**
-     * 替换
+     * 替换.
      *
      * @param $content
+     *
      * @return mixed
      */
     public function replace($content)
     {
-        $content = str_replace("<<type>>", $this->type, $content);
-        $content = str_replace("<<small_type>>", $this->small_type, $content);
-        $content = str_replace("<<name>>", $this->name, $content);
-        $content = str_replace("<<alias>>", $this->alias, $content);
-        $content = str_replace("<<small_alias>>", $this->small_alias, $content);
+        $content = str_replace('<<type>>', $this->type, $content);
+        $content = str_replace('<<small_type>>', $this->small_type, $content);
+        $content = str_replace('<<name>>', $this->name, $content);
+        $content = str_replace('<<alias>>', $this->alias, $content);
+        $content = str_replace('<<small_alias>>', $this->small_alias, $content);
 
         return $content;
     }
 
     /**
-     * 递归删除目录及文件
+     * 递归删除目录及文件.
      *
      * @param $dirname
+     *
      * @return bool
      */
-    public function destoryFile($dirname) {
+    public function destoryFile($dirname)
+    {
         if (!file_exists($dirname)) {
             return false;
         }
@@ -159,16 +162,17 @@ class CreatePluginService
             return unlink($dirname);
         }
         $dir = dir($dirname);
-        if($dir){
+        if ($dir) {
             while (false !== $entry = $dir->read()) {
                 if ($entry == '.' || $entry == '..') {
                     continue;
                 }
                 //递归
-                $this->destoryFile($dirname . DIRECTORY_SEPARATOR . $entry);
+                $this->destoryFile($dirname.DIRECTORY_SEPARATOR.$entry);
             }
         }
         $dir->close();
+
         return rmdir($dirname);
     }
 }

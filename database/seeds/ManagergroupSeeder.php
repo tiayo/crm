@@ -21,8 +21,8 @@ class ManagergroupSeeder extends Seeder
 
         factory(App\Model\Managergroup::class)->create([
             'parent_id' => App\Model\Managergroup::first()['managergroup_id'],
-            'name' => '插件管理员',
-            'rule' => serialize(0),
+            'name'      => '插件管理员',
+            'rule'      => serialize(0),
         ]);
     }
 }
