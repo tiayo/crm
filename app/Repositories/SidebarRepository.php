@@ -3,20 +3,43 @@
 namespace App\Repositories;
 
 use App\Model\Sidebar;
+use App\Services\RedisServiceInterface;
 
 class SidebarRepository
 {
     protected $sidebar;
+    protected $redis;
 
-    public function __construct(Sidebar $sidebar)
+    public function __construct(Sidebar $sidebar, RedisServiceInterface $redis)
     {
         $this->sidebar = $sidebar;
+        $this->redis = $redis;
     }
 
     public function all()
     {
+        $redis = unserialize($this->redis->redisSingleGet('sidebar_get:all'));
+
+        if (!$redis) {
+
+            $info = $this->sidebar
+                ->orderBy('position', 'desc')
+                ->get()
+                ->toArray();
+
+            //写入redis
+            $this->redis->redisSingleAdd('sidebar_get:all', serialize($info), 1800);
+
+            return $info;
+        }
+
+        return $redis;
+    }
+
+    public function get($sidebars)
+    {
         return $this->sidebar
-            ->orderBy('position', 'desc')
+            ->whereIn('sidebar_id', $sidebars)
             ->get();
     }
 
@@ -25,13 +48,6 @@ class SidebarRepository
         return $this->sidebar
             ->where('index', $id)
             ->get();
-    }
-
-    public function update($id, $data)
-    {
-        return $this->sidebar
-            ->where('sidebar_id', $id)
-            ->update($data);
     }
 
     public function find($id)
@@ -46,9 +62,19 @@ class SidebarRepository
             ->first();
     }
 
-    public function create($data)
+    public function findParent()
     {
-        return $this->sidebar->create($data);
+        return $this->sidebar
+            ->where('parent', 0)
+            ->get();
+    }
+
+    public function findWhere($option, $value, $condition = '=', ...$select)
+    {
+        return $this->sidebar
+            ->select(...$select)
+            ->where($option, $condition, $value)
+            ->first();
     }
 
     public function countExist($post)
@@ -59,24 +85,28 @@ class SidebarRepository
             ->count();
     }
 
+    public function create($data)
+    {
+        $this->redis->redisMultiDelete('sidebar_get');
+
+        return $this->sidebar->create($data);
+    }
+
+    public function update($id, $data)
+    {
+        $this->redis->redisMultiDelete('sidebar_get');
+
+        return $this->sidebar
+            ->where('sidebar_id', $id)
+            ->update($data);
+    }
+
     public function delete($id)
     {
+        $this->redis->redisMultiDelete('sidebar_get');
+
         return $this->sidebar
             ->where('sidebar_id', $id)
             ->delete();
-    }
-
-    public function get($sidebars)
-    {
-        return $this->sidebar
-            ->whereIn('sidebar_id', $sidebars)
-            ->get();
-    }
-
-    public function findParent()
-    {
-        return $this->sidebar
-            ->where('parent', 0)
-            ->get();
     }
 }

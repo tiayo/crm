@@ -23,10 +23,10 @@
                     <div class="alert alert-danger fade in @if(!count($errors) > 0) hidden @endif" id="alert_error">
                         <a href="#" class="close" data-dismiss="alert">×</a>
                         <span>
-                    @foreach($errors->all() as $error)
+                            @foreach($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
-                </span>
+                        </span>
                     </div>
                 </div>
 
@@ -43,9 +43,9 @@
                             <label for="parent_id" class="col-lg-3 col-sm-3 control-label">上级分组</label>
                             <div class="col-lg-3">
                                 <select class="form-control m-bot15" name="parent_id" id="parent_id">
-                                    <option value="{{ $old_input['managergroup_id'] }}">{{ $old_input['name']}}</option>
+                                    <option value="{{ $old_input['parent_id'] }}">不改变分组</option>
                                     @foreach($all_group as $group)
-                                        <option value="{{ $group['managergroup_id'] }}">{{ $group['name'] }}</option>
+                                        <option value="{{ $group['parent_id'] }}">{{ $group['name'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
