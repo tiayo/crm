@@ -9,8 +9,7 @@ class ManagePolicy
     use HandlesAuthorization;
 
     /**
-     * 判断�
-     * 级管理员.
+     * 判断是否为超级管理员.
      *
      * @param $manage
      *

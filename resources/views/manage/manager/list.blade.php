@@ -38,11 +38,13 @@
                             <td>{{ $manager['id'] }}</td>
                             <td>{{ $manager['name'] }}</td>
                             <td>{{ $manager['email'] }}</td>
-                            <td>{{ $manager['group_name'] }}</td>
+                            <td>{{ $manager['group_name'] or ($manager['name'] == config('group_name') ? '超级管理员' : null) }}</td>
                             <td>
-                                <button class="btn btn-info" type="button" onclick="location='{{ route('manager_update', ['id' => $manager['id'] ]) }}'">编辑</button>
                                 @if (Auth::guard('manager')->user()['name'] !== $manager['name'])
+                                    <button class="btn btn-info" type="button" onclick="location='{{ route('manager_update', ['id' => $manager['id'] ]) }}'">编辑</button>
                                     <button class="btn btn-info" type="button" onclick="javascript:if(confirm('操作不可恢复，确实要删除吗?'))location='{{ route('manager_destroy', ['id' => $manager['id'] ]) }}'">删除</button>
+                                @else
+                                    禁止操作
                                 @endif
                             </td>
                         </tr>

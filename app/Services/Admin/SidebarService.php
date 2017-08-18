@@ -33,9 +33,9 @@ class SidebarService
         return array_merge($all_parent, $this->sidebar->get($sidebars)->toArray());
     }
 
-    public function allOutIndex()
+    public function allOutIndex($sidebars)
     {
-        return $lists = $this->sidebar->getIndex(1)->toArray();
+        $this->get($sidebars);
     }
 
     public function addParent($lists)

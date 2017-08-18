@@ -2,67 +2,76 @@
 
 namespace App\Services\Manage;
 
+use App\Model\Manager;
 use App\Repositories\SidebarRepository;
-use App\Services\RedisServiceInterface;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class SidebarService
 {
     protected $sidebar;
-    protected $redis;
-    protected $request;
+    protected $manager_group;
 
-    public function __construct(SidebarRepository $sidebar, RedisServiceInterface $redis, Request $request)
+    public function __construct(SidebarRepository $sidebar, ManagerGroupService $manager_group)
     {
         $this->sidebar = $sidebar;
-        $this->redis = $redis;
-        $this->request = $request;
+        $this->manager_group = $manager_group;
     }
 
-    /**
-     * 获取所有菜单.
-     *
-     * @return mixed
-     */
     public function all()
     {
         return $lists = $this->sidebar->all()->toArray();
     }
 
     /**
-     * 获取显示的菜单.
+     * 获取指定的菜单.
+     * 超级管理员有特权
      *
+     * @param array $rule
+     *
+     * @return array
+     */
+    public function get($rule)
+    {
+        //超级管理员返回所有
+        if (Auth::guard('manager')->user()->can('manage', Manager::class)) {
+            return $this->sidebar->all()->toArray();
+        }
+
+        //规则为空时
+        if (empty($rule)) {
+            $rule = [];
+        }
+
+        //添加所有父极菜单
+        $all_parent = $this->sidebar->findParent()->toArray();
+
+        //合并数组并返回
+        return array_merge($all_parent, $this->sidebar->get($rule)->toArray());
+    }
+
+    /**
+     * 获取显示的菜单
+     *
+     * @param $rule
      * @return mixed
      */
     public function allOutIndex()
     {
-        //从redis获取缓存
-        $cache = $this->redis->redisSingleGet('sidebar:'.Auth::guard('manager')->id());
+        $group = Auth::guard('manager')->user()->group;
 
-        if (empty($cache)) {
-            //获取数据
-            $cache = $this->sidebar->getIndex(1)->toArray();
+        $rule = $this->manager_group->first($group)['rule'];
 
-            //存储到redis(过期时间：30分钟)
-            $this->redis->redisSingleAdd('sidebar:'.Auth::guard('manager')->id(), $cache, 1800);
-        } else {
-            //取出缓存转为数组
+        $all_sidebar = $this->get($rule);
 
-            $cache = unserialize($cache);
+        foreach ($all_sidebar as $key => $sidebar) {
+            if ($sidebar['index'] != 1) {
+                unset($all_sidebar[$key]);
+            }
         }
 
-        return $cache;
+        return $all_sidebar;
     }
 
-    /**
-     * 往所有菜单数组单项插�
-     * �顶级栏目名称.
-     *
-     * @param $lists
-     *
-     * @return array
-     */
     public function addParent($lists)
     {
         foreach ($lists as $list) {
@@ -105,7 +114,7 @@ class SidebarService
     }
 
     /**
-     * 根据position反向排序（数字越大越考前）.
+     * 根据position反向排序.
      *
      * @param $array
      *
@@ -188,24 +197,15 @@ class SidebarService
         $map['position'] = $post['position'];
 
         if (!empty($id) && $type == 'update') {
-            //更新
-            $this->sidebar->update($id, $map);
-        } else {
-            //创建
-            $this->sidebar->create($map);
+            return $this->sidebar->update($id, $map);
         }
 
-        //清空redis数据库缓存
-        return $this->redis->redisMultiDelete('sidebar');
+        return $this->sidebar->create($map);
     }
 
     public function breadcrumb($route)
     {
         $result[] = $current = $this->sidebar->findWhereRoute($route);
-
-        if (empty($current)) {
-            return [];
-        }
 
         $result[] = $parent = $this->sidebar->find($current['parent']);
 
@@ -224,9 +224,6 @@ class SidebarService
 
     public function destroy($id)
     {
-        $this->sidebar->delete($id);
-
-        //清空redis数据库缓存
-        return $this->redis->redisMultiDelete('sidebar');
+        return $this->sidebar->delete($id);
     }
 }

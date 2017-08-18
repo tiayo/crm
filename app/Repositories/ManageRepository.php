@@ -18,6 +18,14 @@ class ManageRepository
         return $this->manage->create($data);
     }
 
+    public function all()
+    {
+        return $this->manage
+            ->leftjoin('managergroups', 'managergroup_id', 'group')
+            ->select('managers.*', 'managergroups.name as group_name')
+            ->get();
+    }
+
     public function getChildren($all_group)
     {
         $manage = [];

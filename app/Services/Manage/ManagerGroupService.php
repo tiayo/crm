@@ -2,6 +2,7 @@
 
 namespace App\Services\Manage;
 
+use App\Model\Manager;
 use App\Repositories\ManagergroupRepository;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,9 +26,7 @@ class ManagerGroupService
     }
 
     /**
-     * 获取排除第一条（第一条默认为�
-     * 级管理员�
-     * �置）的所有分组.
+     * 获取排除第一条外的分组
      *
      * @return mixed
      */
@@ -72,9 +71,7 @@ class ManagerGroupService
     }
 
     /**
-     * 获取第一条记录作为�
-     * 级管理员分组
-     * 返回id.
+     * 获取第一条记录
      *
      * @return mixed
      */
@@ -94,12 +91,16 @@ class ManagerGroupService
      */
     public function getChildrenGroup($parent_id, ...$select)
     {
+        //超级管理员返回所有
+        if (Auth::guard('manager')->user()->can('manage', Manager::class)) {
+            return $this->manager_group->get()->toArray();
+        }
+
         $all_group = $this->manager_group->getChildrenGroup($parent_id, ...$select);
 
         //加上自己的分组
-        $me = $this->manager_group->first(Auth::guard('manager')->user()['group']);
-
-        array_unshift($all_group, $me->toArray());
+        //$me = $this->manager_group->first(Auth::guard('manager')->user()['group']);
+        //array_unshift($all_group, $me->toArray());
 
         sort($all_group);
 

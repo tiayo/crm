@@ -24,15 +24,6 @@ Route::group(['namespace' => 'Manage', 'prefix' => 'manage'], function () {
         // ---------------------------首页--------------------------- //
         Route::get('/', 'IndexController@index')->name('manage');
 
-        // ---------------------------操作菜单管理--------------------------- //
-        Route::get('/sidebar/list', 'SidebarController@view')->name('manage_sidebar_view');
-        Route::get('/sidebar/add', 'SidebarController@createView')->name('manage_sidebar_add');
-        Route::post('/sidebar/add', 'SidebarController@createOrUpdate');
-
-        Route::get('/sidebar/update/{id}/{type}', 'SidebarController@update')->name('manage_sidebar_update');
-        Route::post('/sidebar/update/{id}/{type}', 'SidebarController@createOrUpdate');
-        Route::get('/sidebar/destroy/{id}', 'SidebarController@destroy')->name('manage_sidebar_destroy');
-
         // ---------------------------操作管理员管理--------------------------- //
         Route::get('/manager/list', 'ManagerController@listView')->name('manager_list');
         Route::get('/manager/add', 'ManagerController@addView')->name('manager_add');
@@ -67,5 +58,19 @@ Route::group(['namespace' => 'Manage', 'prefix' => 'manage'], function () {
             Route::get('/install/{plugin_id}', 'PluginController@install')->name('plugin_install');
             Route::get('/uninstall/{plugin_id}', 'PluginController@uninstall')->name('plugin_uninstall');
         });
+
+
+        // ---------------------------操作菜单管理--------------------------- //
+        //第三层（超级管理员权限）
+        Route::group(['middleware' => 'supermanager'], function () {
+            Route::get('/sidebar/list', 'SidebarController@view')->name('manage_sidebar_view');
+            Route::get('/sidebar/add', 'SidebarController@createView')->name('manage_sidebar_add');
+            Route::post('/sidebar/add', 'SidebarController@createOrUpdate');
+
+            Route::get('/sidebar/update/{id}/{type}', 'SidebarController@update')->name('manage_sidebar_update');
+            Route::post('/sidebar/update/{id}/{type}', 'SidebarController@createOrUpdate');
+            Route::get('/sidebar/destroy/{id}', 'SidebarController@destroy')->name('manage_sidebar_destroy');
+        });
+
     });
 });

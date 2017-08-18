@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Manage;
 
 use App\Http\Controllers\Controller;
-use App\Services\Admin\SidebarService;
+use App\Services\Manage\SidebarService;
 use App\Services\Manage\ManagerGroupService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,9 +47,9 @@ class ManagerGroupController extends Controller
     {
         $group = Auth::guard('manager')->user()->group;
 
-        $sidebar_id = $this->manager_group->first($group)['rule'];
+        $rule = $this->manager_group->first($group)['rule'];
 
-        $all_sidebar = $this->sidebar->tree($this->sidebar->get($sidebar_id));
+        $all_sidebar = $this->sidebar->tree($this->sidebar->get($rule));
 
         $all_group = $this->manager_group->getChildrenGroup($group, '*');
 
@@ -75,9 +75,9 @@ class ManagerGroupController extends Controller
     {
         $group = Auth::guard('manager')->user()->group;
 
-        $sidebar_id = $this->manager_group->first($group)['rule'];
+        $rule = $this->manager_group->first($group)['rule'];
 
-        $all_sidebar = $this->sidebar->tree($this->sidebar->get($sidebar_id));
+        $all_sidebar = $this->sidebar->tree($this->sidebar->get($rule));
 
         $all_group = $this->manager_group->getChildrenGroup($group, '*');
 
