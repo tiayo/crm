@@ -21,12 +21,8 @@ class ManagergroupRepository
 
     public function getChildrenGroup($parent_id, ...$select)
     {
-        if (empty($this->getChildrenGroup_select)) {
-            $this->getChildrenGroup_select = implode(',', $select);
-        }
-
         $all_group = $this->manager_group
-            ->select($this->getChildrenGroup_select)
+            ->select(...$select)
             ->where('parent_id', $parent_id)
             ->get()
             ->toArray();
@@ -41,7 +37,7 @@ class ManagergroupRepository
                     continue;
                 }
 
-                $result = array_merge($result, $this->getChildrenGroup($group['managergroup_id']));
+                $result = array_merge($result, $this->getChildrenGroup($group['managergroup_id'], ...$select));
             }
         }
 

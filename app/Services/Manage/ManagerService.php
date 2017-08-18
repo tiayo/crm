@@ -2,6 +2,7 @@
 
 namespace App\Services\Manage;
 
+use App\Model\Manager;
 use App\Repositories\ManageRepository;
 use App\Services\RedisServiceInterface;
 use Illuminate\Support\Facades\Auth;
@@ -24,11 +25,17 @@ class ManagerService
     /**
      * 获取下级管理员
      * redis缓存.
+     *超级管理员特权
      *
      * @return array
      */
     public function getChildren()
     {
+        //超级管理员返回所有
+        if (Auth::guard('manager')->user()->can('manage', Manager::class)) {
+            return $this->manage->all()->toArray();
+        }
+
         $all_manage = unserialize($this->redis->redisSingleGet('manageChildren:'.Auth::guard('manager')->id()));
 
         if (empty($all_manage)) {
@@ -54,14 +61,13 @@ class ManagerService
 
     /**
      * 获取分组
-     * �
      * 列出低于当前级别的.
      *
      * @return mixed
      */
     public function getGroup()
     {
-        return $this->manager_group->getLower();
+        return $this->manager_group->getChildrenGroup(Auth::guard('manager')->user()['group'], 'managergroup_id', 'name');
     }
 
     /**
@@ -76,23 +82,11 @@ class ManagerService
         return $this->manage->first($id);
     }
 
-    /**
-     * 获取�
-     * 级管理员id
-     * 默认数据表第一个管理员为�
-     * 级管理员.
-     *
-     * @return mixed
-     */
-    public function superId()
-    {
-        return $this->manage->superId();
-    }
 
     /**
      * 更新或编辑
      * 鉴权在控制器中间件进行
-     * 执行后需要�
+     * 执行后需要�
      * 除redis.
      *
      * @param $post
@@ -125,7 +119,7 @@ class ManagerService
     /**
      * 删除记录
      * 鉴权在控制器中间件进行
-     * 执行后需要�
+     * 执行后需要�
      * 除redis.
      *
      * @param $id

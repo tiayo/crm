@@ -45,6 +45,11 @@ class ManagerControl
      */
     public function updateView($id, $group)
     {
+        //不能编辑自己
+        if ($id == Auth::guard('manager')->id()) {
+            return false;
+        }
+
         $manager_children = $this->manager->getChildren();
 
         foreach ($manager_children as $children) {
@@ -88,7 +93,7 @@ class ManagerControl
     public function destroy($id, $group)
     {
         //不能删除自己
-        if ($id == Auth::guard('manager_id')->id()) {
+        if ($id == Auth::guard('manager')->id()) {
             return false;
         }
 
