@@ -50,7 +50,7 @@ class SidebarController extends Controller
         ]);
     }
 
-    public function createOrUpdate($id = null, $type = null)
+    public function post($id = null, $type = null)
     {
         $this->validate($this->request, [
             'name'     => 'required',
@@ -60,7 +60,7 @@ class SidebarController extends Controller
             'position' => 'required|integer',
         ]);
 
-        $this->sidebar->createOrCreate($this->request->all(), $id, $type);
+        $this->sidebar->post($this->request->all(), $id, $type);
 
         return redirect()->route('manage_sidebar_view');
     }

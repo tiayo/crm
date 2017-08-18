@@ -84,7 +84,12 @@
                                 </label>
                             </div>
                     </div>
-
+                    <div class="form-group">
+                        <label for="whitelist" class="col-sm-2 col-sm-2 control-label">下属路由</label>
+                        <div class="col-sm-3">
+                            <textarea class="form-control" id="whitelist" name="whitelist">{{ $old_input['whitelist'] }}</textarea>
+                        </div>
+                    </div>
                     <div class="form-actions">
                         <button class="btn btn-success" type="submit"><i class="fa fa-cloud-upload"></i> 提交创建</button>
                     </div>

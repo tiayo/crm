@@ -14,6 +14,7 @@ class Sidebar extends Model
         'index',
         'parent',
         'position',
+        'whitelist',
     ];
 
     protected $primaryKey = 'sidebar_id';

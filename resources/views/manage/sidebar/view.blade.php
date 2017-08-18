@@ -33,6 +33,7 @@
                             <th>名称</th>
                             <th>父级</th>
                             <th>路由</th>
+                            <th>下属路由</th>
                             <th>状态</th>
                             <th>位置</th>
                             <th>操作</th>
@@ -46,6 +47,7 @@
                                 <th style="@if($list['parent'] == 0) color:black @endif">{{ $list['name'] }}</th>
                                 <th>{{ $list['parent_t'] }}</th>
                                 <th>{{ $list['route'] }}</th>
+                                <th>{{ $list['whitelist'] }}</th>
                                 <th>
                                     @if ($list['index'] == 1)
                                         显示中

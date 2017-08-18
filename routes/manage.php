@@ -65,10 +65,10 @@ Route::group(['namespace' => 'Manage', 'prefix' => 'manage'], function () {
         Route::group(['middleware' => 'supermanager'], function () {
             Route::get('/sidebar/list', 'SidebarController@view')->name('manage_sidebar_view');
             Route::get('/sidebar/add', 'SidebarController@createView')->name('manage_sidebar_add');
-            Route::post('/sidebar/add', 'SidebarController@createOrUpdate');
+            Route::post('/sidebar/add', 'SidebarController@post');
 
             Route::get('/sidebar/update/{id}/{type}', 'SidebarController@update')->name('manage_sidebar_update');
-            Route::post('/sidebar/update/{id}/{type}', 'SidebarController@createOrUpdate');
+            Route::post('/sidebar/update/{id}/{type}', 'SidebarController@post');
             Route::get('/sidebar/destroy/{id}', 'SidebarController@destroy')->name('manage_sidebar_destroy');
         });
 

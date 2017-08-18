@@ -19,7 +19,20 @@ class SidebarService
 
     public function all()
     {
-        return $lists = $this->sidebar->all()->toArray();
+        $sidebars = $lists = $this->sidebar->all();
+
+        $result = [];
+
+        foreach ($sidebars as $sidebar) {
+
+            if (!empty($sidebar['whitelist'])) {
+                $sidebar['whitelist'] = implode(unserialize($sidebar['whitelist']), ',');
+            }
+
+            $result[] = $sidebar;
+        }
+
+        return $result;
     }
 
     /**
@@ -34,7 +47,7 @@ class SidebarService
     {
         //超级管理员返回所有
         if (Auth::guard('manager')->user()->can('manage', Manager::class)) {
-            return $this->sidebar->all()->toArray();
+            return $this->all();
         }
 
         //规则为空时
@@ -188,13 +201,14 @@ class SidebarService
         return $result;
     }
 
-    public function createOrCreate($post, $id = null, $type = null)
+    public function post($post, $id = null, $type = null)
     {
         $map['name'] = $post['name'];
         $map['route'] = !isset($post['route']) ? null : $post['route'];
         $map['parent'] = $post['parent'];
         $map['index'] = $post['index'];
         $map['position'] = $post['position'];
+        $map['whitelist'] = serialize(explode(',', $post['whitelist']));
 
         if (!empty($id) && $type == 'update') {
             return $this->sidebar->update($id, $map);
@@ -219,7 +233,18 @@ class SidebarService
 
     public function find($id)
     {
-        return $this->sidebar->find($id);
+        $result = $this->sidebar->find($id);
+
+        if (!empty($result['whitelist'])) {
+            $result['whitelist'] = implode(unserialize($result['whitelist']), ',');
+        }
+
+        return $result;
+    }
+
+    public function findWhere($option, $value, $condition = '=', ...$select)
+    {
+        return $this->sidebar->findWhere($option, $value, $condition = '=', ...$select);
     }
 
     public function destroy($id)

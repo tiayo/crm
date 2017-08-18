@@ -75,7 +75,7 @@ class RedisService implements RedisServiceInterface
 
         foreach ($keys as $key) {
             //删除键值
-            Redis::set($key, null);
+            Redis::del($key);
         }
 
         return true;
@@ -90,7 +90,7 @@ class RedisService implements RedisServiceInterface
      */
     public function redisSingleDelete($keyword)
     {
-        return Redis::set($keyword, null);
+        return Redis::del($keyword);
     }
 
     /**
