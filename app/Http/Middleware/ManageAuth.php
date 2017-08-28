@@ -13,11 +13,15 @@ class ManageAuth
 {
     protected $sidebar;
     protected $manage_group;
+    protected $except;
+    protected $route;
 
     public function __construct(SidebarRepository $sidebar, ManagerGroupService $manage_group)
     {
         $this->sidebar = $sidebar;
         $this->manage_group = $manage_group;
+        $this->except = config('site.except_route');
+        $this->route = Route::currentRouteName();
     }
 
     /**
@@ -36,8 +40,8 @@ class ManageAuth
             return redirect()->route('manage.login');
         }
 
-        //超级管理员跳过鉴权
-        if (Auth::guard('manager')->user()->can('manage', Manager::class)) {
+        //超级管理员跳过鉴权、例外路由跳过鉴权
+        if (Auth::guard('manager')->user()->can('manage', Manager::class) || $this->except()) {
             return $next($request);
         }
 
@@ -46,7 +50,7 @@ class ManageAuth
 
         //获取路由id
         $sidebar_id = $this->sidebar
-            ->findWhere('route', $route = Route::currentRouteName(), '=', 'sidebar_id')['sidebar_id'] ? : $this->whitelist($route);
+            ->findWhere('route', $this->route, '=', 'sidebar_id')['sidebar_id'] ? : $this->whitelist($this->route);
 
         //找到id,继续鉴权
         if ($sidebar_id) {
@@ -59,6 +63,24 @@ class ManageAuth
 
         //鉴权失败
         return response('没有权限访问!', 403);
+    }
+
+    /**
+     * 搜索例外路由
+     *
+     * @return bool
+     */
+    public function except()
+    {
+        $excepts = $this->except;
+
+        foreach($excepts as $except) {
+            if ($this->route == $except) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
