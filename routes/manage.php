@@ -44,7 +44,7 @@ Route::group(['namespace' => 'Manage', 'prefix' => 'manage'], function () {
         //第三层（设置前缀）
         Route::group(['prefix' => 'plugin'], function () {
             Route::get('/add', 'PluginController@addView')->name('plugins_add');
-            Route::post('/add', 'PluginController@addPost');
+            Route::post('/add', 'PluginController@addPost')->name('plugins_add');
             Route::get('/manage_plugins', 'PluginController@managePlugins')->name('manage_plugins');
             Route::get('/user_plugins', 'PluginController@userPlugins')->name('user_plugins');
             Route::get('/plugin_status/{plugin_id}', 'PluginController@pluginStatus')->name('plugin_status');
