@@ -22,7 +22,7 @@
         <div class="col-md-12">
             <section class="panel">
                 <header class="panel-heading">
-                    插件列表
+                    菜单列表
                 </header>
                 <div class="panel-body">
 
@@ -47,7 +47,7 @@
                                 <th style="@if($list['parent'] == 0) color:black @endif">{{ $list['name'] }}</th>
                                 <th>{{ $list['parent_t'] }}</th>
                                 <th>{{ $list['route'] }}</th>
-                                <th>{{ $list['whitelist'] }}</th>
+                                <th>{{ substr($list['whitelist'], 0, 30) }}...</th>
                                 <th>
                                     @if ($list['index'] == 1)
                                         显示中

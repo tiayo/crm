@@ -106,8 +106,7 @@ class PluginController extends Controller
     }
 
     /**
-     * 安�
-     * 插件.
+     * 安装插件.
      *
      * @param $plugin_id
      *
