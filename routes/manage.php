@@ -27,17 +27,17 @@ Route::group(['namespace' => 'Manage', 'prefix' => 'manage'], function () {
         // ---------------------------操作管理员管理--------------------------- //
         Route::get('/manager/list', 'ManagerController@listView')->name('manager_list');
         Route::get('/manager/add', 'ManagerController@addView')->name('manager_add');
-        Route::post('/manager/add', 'ManagerController@post');
+        Route::post('/manager/add', 'ManagerController@post')->name('manager_add');
         Route::get('/manager/update/{id}', 'ManagerController@updateView')->name('manager_update');
-        Route::post('/manager/update/{id}', 'ManagerController@post');
+        Route::post('/manager/update/{id}', 'ManagerController@post')->name('manager_update');
         Route::get('/manager/destroy/{id}', 'ManagerController@destroy')->name('manager_destroy');
 
         // ---------------------------操作管理员管理 分组管理--------------------------- //
         Route::get('/managergroup/list', 'ManagerGroupController@listView')->name('managergroup_list');
         Route::get('/managergroup/add', 'ManagerGroupController@addView')->name('managergroup_add');
-        Route::post('/managergroup/add', 'ManagerGroupController@post');
+        Route::post('/managergroup/add', 'ManagerGroupController@post')->name('managergroup_add');
         Route::get('/managergroup/update/{id}', 'ManagerGroupController@updateView')->name('managergroup_update');
-        Route::post('/managergroup/update/{id}', 'ManagerGroupController@post');
+        Route::post('/managergroup/update/{id}', 'ManagerGroupController@post')->name('managergroup_update');
         Route::get('/managergroup/destroy/{id}', 'ManagerGroupController@destroy')->name('managergroup_destroy');
 
         // ---------------------------操作插件管理--------------------------- //
@@ -51,7 +51,7 @@ Route::group(['namespace' => 'Manage', 'prefix' => 'manage'], function () {
             Route::get('/plugin_index/{plugin_id}', 'PluginController@pluginIndex')->name('plugin_index');
 
             Route::get('/plugin_update/{plugin_id}', 'PluginController@updateView')->name('plugins_update');
-            Route::post('/plugin_update/{plugin_id}', 'PluginController@updatePost');
+            Route::post('/plugin_update/{plugin_id}', 'PluginController@updatePost')->name('plugins_update');
 
             Route::get('/plugin_delete/{plugin_id}/{type}', 'PluginController@delete')->name('plugins_delete');
 
@@ -65,10 +65,10 @@ Route::group(['namespace' => 'Manage', 'prefix' => 'manage'], function () {
         Route::group(['middleware' => 'supermanager'], function () {
             Route::get('/sidebar/list', 'SidebarController@view')->name('manage_sidebar_view');
             Route::get('/sidebar/add', 'SidebarController@createView')->name('manage_sidebar_add');
-            Route::post('/sidebar/add', 'SidebarController@post');
+            Route::post('/sidebar/add', 'SidebarController@post')->name('manage_sidebar_add');
 
             Route::get('/sidebar/update/{id}/{type}', 'SidebarController@update')->name('manage_sidebar_update');
-            Route::post('/sidebar/update/{id}/{type}', 'SidebarController@post');
+            Route::post('/sidebar/update/{id}/{type}', 'SidebarController@post')->name('manage_sidebar_update');
             Route::get('/sidebar/destroy/{id}', 'SidebarController@destroy')->name('manage_sidebar_destroy');
         });
 
