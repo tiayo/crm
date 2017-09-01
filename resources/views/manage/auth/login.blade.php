@@ -25,7 +25,7 @@
 
     <div class="form-signin" action="index.html">
         <div class="form-signin-heading text-center">
-            <h1 class="sign-title">平台商管理登录</h1>
+            <h1 class="sign-title">{{ __("title.平台商管理登录") }}</h1>
             <img src="/style/media/image/logo.png" width="70%" alt=""/>
         </div>
         <div class="login-wrap">
@@ -40,11 +40,9 @@
                     <div class="alert alert-danger fade in @if(!count($errors) > 0) hidden @endif" id="alert_error">
                         <a href="#" class="close" data-dismiss="alert">×</a>
                         <span>
-                            @if ($errors->has('name') || $errors->has('password'))
-                                邮箱或密码错误！
-                            @elseif ($errors->has('code'))
-                                验证码错误！
-                            @endif
+                            @foreach($errors->all() as $error)
+                               {{ $error }}
+                            @endforeach
                         </span>
                     </div>
                 </div>
@@ -57,6 +55,13 @@
                 <a class="" href="/manage/register">
                     注册
                 </a>
+                |
+                切换语言：
+                @if(config('app.locale') == 'en')
+                        <a href="{{ route("language", ['locale' => 'zh-cn']) }}">中文</a>
+                        @else
+                        <a href="{{ route("language", ['locale' => 'en']) }}">英文</a>
+                @endif
             </div>
         </div>
     </div>

@@ -8,6 +8,7 @@
 
 //第一层（设置命令空间和前缀）
 Route::group(['namespace' => 'Manage', 'prefix' => 'manage'], function () {
+
     $this->get('logout', 'Auth\LoginController@logout')->name('manage.logout');
 
     //第二层（设置未登录中间件）

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Manage;
 use App\Http\Controllers\Controller;
 use App\Services\Manage\ManagerService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class ManagerController extends Controller
 {
@@ -88,13 +89,7 @@ class ManagerController extends Controller
             'password' => 'min:6',
         ]);
 
-        if (empty($id) && $id !== 0) {
-            //执行添加操作
-            $this->manage->updateOrCreate($this->request->all());
-        } else {
-            //执行更新操作
-            $this->manage->updateOrCreate($this->request->all(), $id);
-        }
+        $this->manage->updateOrCreate($this->request->all(), $id);
 
         return redirect()->route('manager_list');
     }
