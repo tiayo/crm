@@ -46,7 +46,7 @@
         </div>
         <!--logo and iconic logo end-->
         <div class="left-side-inner">
-            @include('manage.layouts.slidebar')
+            @include('manage.layouts.sidebar')
         </div>
     </div>
     <!-- left side end-->
@@ -58,6 +58,17 @@
         <div class="header-section">
             <div class="menu-right">
                 <ul class="notification-menu">
+                    <li>
+                        @if(config('app.locale') == 'en')
+                            <a href="{{ route("language", ['locale' => 'zh-cn']) }}" class="btn btn-default dropdown-toggle">切换到中文</a>
+
+                            @else
+
+                            <a href="{{ route("language", ['locale' => 'en']) }}" class="btn btn-default dropdown-toggle">Change English</a>
+                        @endif
+                        |
+                    </li>
+
                     <li>
                         <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             当前帐号:
