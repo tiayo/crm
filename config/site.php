@@ -8,4 +8,5 @@ return [
         'manage_plugin_search',
         'user_plugin_testuser',
     ],
+    'language' => 'zh-ch',
 ];

@@ -3,17 +3,11 @@
 if (!function_exists('can')) {
     /**
      * 权限验证
-     * �
-     * �局�
-     * 助函数.
+     * 全局助函数.
      *
-     * @param $name //传�
-     * �Model文件名
-     * @param $option //传�
-     * �权限操作名
-     * @param $class //传�
-     * �要核对的�
-     * 容
+     * @param $name //传Model文件名
+     * @param $option //传权限操作名
+     * @param $class //传要核对的内容
      *
      * @return mixed
      */
@@ -80,5 +74,12 @@ if (!function_exists('route_defined')) {
         }
 
         return Route($route);
+    }
+}
+
+if(!function_exists('l')) {
+    function l($value)
+    {
+        return $value;
     }
 }

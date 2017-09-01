@@ -35,13 +35,13 @@
                     <div class="form-group">
                         <label for="email" class="col-sm-2 col-sm-2 control-label">管理员邮箱</label>
                         <div class="col-sm-3">
-                            <input type="email" class="form-control" id="email" name="email" value="{{ $old_input['email'] or null}}">
+                            <input type="email" class="form-control" id="email" name="email" value="{{ $old_input['email'] or null}}" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="password" class="col-sm-2 col-sm-2 control-label">管理员密码</label>
                         <div class="col-sm-3">
-                            <input type="password" class="form-control" id="password" name="password" value="{{ $old_input['password'] or null}}" placeholder="不更改请放空" required>
+                            <input type="password" class="form-control" id="password" name="" value="{{ $old_input['password'] or null}}" placeholder="不更改请放空">
                         </div>
                     </div>
                     <div class="form-group">
@@ -70,4 +70,16 @@
 
 @section('script')
     @parent
+    <script>
+        $(document).ready(function () {
+            $('#form').submit(function () {
+                var password = $('#password');
+                var length = password.val().length;
+
+                if (length > 0) {
+                    password.attr('name', 'password');
+                }
+            })
+        })
+    </script>
 @endsection
