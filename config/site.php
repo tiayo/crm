@@ -9,4 +9,8 @@ return [
         'user_plugin_testuser',
     ],
     'language' => 'zh-ch',
+    'icon' => [
+        '1' => 'pinterest',
+        '5' => 'user-md'
+    ],
 ];

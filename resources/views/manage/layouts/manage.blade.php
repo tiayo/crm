@@ -93,22 +93,22 @@
                 <div class="col-md-12">
                     <!--breadcrumbs start -->
                     <ul class="breadcrumb panel">
-                        <li><a href="/manage"><i class="fa fa-home"></i>主页</a></li>
+                        <li><a href="/manage"><i class="fa fa-home"></i> {{ __('sidebar.主页') }}</a></li>
 
                         @if (!empty($parent_breadcrumb))
                             @foreach($breadcrumb = array_reverse($app->breadcrumb($parent_breadcrumb)) as $value)
-                                <li navValue="nav_{{ $value['sidebar_id'] }}">{{ $value['name'] }}</li>
+                                <li navValue="nav_{{ $value['sidebar_id'] }}">{{  __('sidebar.'.$value['name']) }}</li>
                             @endforeach
 
                             @else
 
                             @foreach($breadcrumb = array_reverse($app->breadcrumb(Route::currentRouteName())) as $value)
-                                <li navValue="nav_{{ $value['sidebar_id'] }}">{{ $value['name'] }}</li>
+                                <li navValue="nav_{{ $value['sidebar_id'] }}">{{  __('sidebar.'.$value['name']) }}</li>
                             @endforeach
                         @endif
 
                         @if(empty($breadcrumb))
-                            <li navValue="nav_0">菜单管理</li>
+                            <li navValue="nav_0">{{ __('sidebar.菜单管理') }}</li>
                         @endif
                     </ul>
                     <!--breadcrumbs end -->
