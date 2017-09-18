@@ -79,14 +79,15 @@ if (!function_exists('route_defined')) {
     }
 }
 
-if(!function_exists('l')) {
-    function l($value)
-    {
-        return $value;
-    }
-}
-
 if(!function_exists('MailSend')) {
+    /**
+     * 邮件发送方法
+     * 使用方法详见MailController的test方法
+     *
+     * @param $user
+     * @param $data
+     * @param $when
+     */
     function MailSend($user, $data, $when)
     {
         MailController::email($user, $data, $when);
