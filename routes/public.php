@@ -9,3 +9,5 @@ Route::get('/language/{locale}', function ($locale) {
     Request::session()->put('language', $locale);
     return redirect()->back();
 })->name('language');
+
+Route::get('/mailable', 'MailController@test');

@@ -1,5 +1,7 @@
 <?php
 
+use  App\Http\Controllers\MailController;
+
 if (!function_exists('can')) {
     /**
      * 权限验证
@@ -81,5 +83,12 @@ if(!function_exists('l')) {
     function l($value)
     {
         return $value;
+    }
+}
+
+if(!function_exists('MailSend')) {
+    function MailSend($user, $data, $when)
+    {
+        MailController::email($user, $data, $when);
     }
 }
