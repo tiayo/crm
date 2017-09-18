@@ -81,6 +81,6 @@ class PublicShipped extends Mailable
 
         http_response_code($code);
 
-        return true;
+        exit();
     }
 }
