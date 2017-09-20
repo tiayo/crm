@@ -34,6 +34,11 @@ class PublicShipped extends Mailable
      */
     public function build()
     {
+        if (empty($this->data['attach'])) {
+            return $this->view('mails.'.$this->data['view'], $this->data['assign'])
+                ->subject($this->data['subject']);
+        }
+
         return $this->view('mails.'.$this->data['view'], $this->data['assign'])
             ->subject($this->data['subject'])
             ->attach($this->data['attach']);

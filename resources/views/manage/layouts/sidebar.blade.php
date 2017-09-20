@@ -20,7 +20,7 @@
         @endif
     @endforeach
 
-    @if (Auth::guard('manager')->user()['name'] == config('site.manage'))
+    @if (can('manage', null, 'manager'))
         <li class="menu-list" id="nav_0">
             <a href="">
                 <i class="fa fa-align-justify"></i> <span>{{ __("sidebar.菜单管理") }}</span>
