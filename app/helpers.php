@@ -1,23 +1,23 @@
 <?php
 
 use  App\Http\Controllers\MailController;
+use Illuminate\Support\Facades\Auth;
 
 if (!function_exists('can')) {
     /**
      * 权限验证
-     * 全局助函数.
+     * 全局辅助函数
      *
-     * @param $name //传Model文件名
-     * @param $option //传权限操作名
-     * @param $class //传要核对的内容
-     *
+     * @param $option
+     * @param null $class
+     * @param string $guard
      * @return mixed
      */
-    function can($name, $option, $class)
+    function can($option, $class = null, $guard = '')
     {
-        $$name = app("App\Model\\".ucwords(strtolower($name)));
+        $class = $class ?? Auth::guard($guard)->user();
 
-        return $$name->find(Auth::guard($name)->id())->can($option, $class);
+        return Auth::guard($guard)->user()->can($option, $class);
     }
 }
 

@@ -42,10 +42,14 @@ class MailController extends Controller
      * @param $user
      * @param $data
      */
-    static  public function email($user, $data, $when = null)
+    static public function email($user, $data, $when = null)
     {
-        $when = empty($when) ? Carbon::now() : $when;
+        //直接发送
+        if (empty($when)) {
+            return Mail::to($user)->send(new PublicShipped($data));
+        }
 
+        //延时发送
         return Mail::to($user)->later($when, new PublicShipped($data));
     }
 }
